@@ -942,9 +942,9 @@
   <main class="app" id="top">
     <section class="hero">
       <div class="hero-media">
-        <img src="assets/hero-toy-campus.png" alt="原创潮玩角色站在校园晨光中的20周年主题视觉" />
+        <img src="assets/hero-toy-campus.png" alt="原创潮玩角色站在校园晨光中的20周年主题视觉" fetchpriority="high" />
       </div>
-      <img class="competition-badge" src="assets/ncda-logo.png" alt="未来设计师全国高校数字艺术设计大赛 logo" />
+      <img class="competition-badge" src="assets/ncda-logo.png" alt="未来设计师全国高校数字艺术设计大赛 logo" fetchpriority="high" />
       <div class="hero-copy reveal visible">
         <p class="eyebrow">2006 - 2026 POP MART 20周年校园共创</p>
         <h1>同岁同行<br />一起长大</h1>
@@ -1174,21 +1174,21 @@
               <label>
                 <input type="radio" name="ip" value="Molly" checked />
                 <span class="ip-card">
-                  <img src="assets/ip-molly.png" alt="Molly 同行IP形象" />
+                  <img src="assets/ip-molly.png" alt="Molly 同行IP形象" loading="lazy" decoding="async" />
                   <span>Molly</span>
                 </span>
               </label>
               <label>
                 <input type="radio" name="ip" value="Dimoo" />
                 <span class="ip-card">
-                  <img src="assets/ip-dimoo.png" alt="Dimoo 同行IP形象" />
+                  <img src="assets/ip-dimoo.png" alt="Dimoo 同行IP形象" loading="lazy" decoding="async" />
                   <span>Dimoo</span>
                 </span>
               </label>
               <label>
                 <input type="radio" name="ip" value="SKULLPANDA" />
                 <span class="ip-card">
-                  <img src="assets/ip-skullpanda.png" alt="SKULLPANDA 同行IP形象" />
+                  <img src="assets/ip-skullpanda.png" alt="SKULLPANDA 同行IP形象" loading="lazy" decoding="async" />
                   <span>SKULLPANDA</span>
                 </span>
               </label>
@@ -1230,7 +1230,7 @@
     </div>
   </footer>
 
-  <audio id="bgMusic" src="assets/bgm-peiwozhangda.mp3" preload="auto" autoplay loop playsinline webkit-playsinline></audio>
+  <audio id="bgMusic" data-src="assets/bgm-peiwozhangda_min.mp3" preload="none" loop playsinline webkit-playsinline></audio>
 
   <button class="music-toggle music-active" id="musicBtn" type="button" aria-label="暂停背景音乐" title="暂停背景音乐">音乐开</button>
 
@@ -1262,7 +1262,11 @@
     revealItems.forEach((item) => observer.observe(item));
 
     bgMusic.volume = 0.46;
-    startMusic();
+    if (document.readyState === "complete") {
+      scheduleMusicStart();
+    } else {
+      window.addEventListener("load", scheduleMusicStart, { once: true });
+    }
     document.addEventListener("WeixinJSBridgeReady", startMusic, false);
     window.addEventListener("pointerdown", () => {
       if (musicWanted && bgMusic.paused) startMusic();
@@ -1322,6 +1326,7 @@
 
     function startMusic() {
       musicWanted = true;
+      ensureMusicSource();
       const playPromise = bgMusic.play();
       if (playPromise && typeof playPromise.then === "function") {
         playPromise
@@ -1329,6 +1334,24 @@
           .catch(() => updateMusicButton(false, true));
       } else {
         updateMusicButton(!bgMusic.paused, false);
+      }
+    }
+
+    function ensureMusicSource() {
+      if (!bgMusic.getAttribute("src")) {
+        bgMusic.src = bgMusic.dataset.src;
+        bgMusic.load();
+      }
+    }
+
+    function scheduleMusicStart() {
+      const run = () => {
+        if (musicWanted) startMusic();
+      };
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(run, { timeout: 3200 });
+      } else {
+        setTimeout(run, 2600);
       }
     }
 
