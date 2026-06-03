@@ -1,468 +1,1245 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>同岁同行，一起长大 | 泡泡玛特20周年</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        pop: {
-                            pink: '#FF6B9D',
-                            blue: '#4ECDC4',
-                            yellow: '#FFE66D',
-                            purple: '#9B5DE5',
-                            dark: '#2D3436'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['PingFang SC', 'Microsoft YaHei', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .text-shadow-lg {
-                text-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            .scroll-smooth {
-                scroll-behavior: smooth;
-            }
-            .hide-scrollbar::-webkit-scrollbar {
-                display: none;
-            }
-            .hide-scrollbar {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-            .parallax {
-                background-attachment: fixed;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fff7f3" />
+  <title>同岁同行，一起长大 | 泡泡玛特20周年H5</title>
+  <style>
+    :root {
+      --ink: #201b1c;
+      --muted: #6f6669;
+      --paper: #fffaf6;
+      --pink: #ff5f88;
+      --coral: #ff8a68;
+      --mint: #57c7b6;
+      --yellow: #ffd95a;
+      --blue: #6b9cff;
+      --violet: #8e6cff;
+      --line: rgba(32, 27, 28, .12);
+      --shadow: 0 20px 50px rgba(77, 44, 35, .16);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+    body.locked { overflow: hidden; }
+    img { max-width: 100%; display: block; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .app {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 247, 243, .96) 92%),
+        radial-gradient(circle at 8% 20%, rgba(255, 217, 90, .24), transparent 28rem),
+        radial-gradient(circle at 100% 6%, rgba(87, 199, 182, .18), transparent 24rem);
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px clamp(16px, 5vw, 56px);
+      background: rgba(255, 250, 246, .78);
+      border-bottom: 1px solid rgba(32, 27, 28, .08);
+      backdrop-filter: blur(18px);
+      transform: translateY(-100%);
+      transition: transform .5s ease;
+    }
+    .nav.show { transform: translateY(0); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+    .brand-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: conic-gradient(from 140deg, var(--pink), var(--yellow), var(--mint), var(--pink));
+      box-shadow: 0 8px 18px rgba(255, 95, 136, .25);
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .62);
+    }
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .nav-links a.active,
+    .nav-links a:hover {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 84px clamp(18px, 5vw, 64px) 36px;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.04);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(32, 27, 28, .12) 0%, rgba(32, 27, 28, .14) 42%, rgba(255, 250, 246, .96) 92%),
+        linear-gradient(90deg, rgba(255, 250, 246, .74), rgba(255, 250, 246, .18) 58%, rgba(255, 250, 246, .58));
+    }
+    .hero-copy {
+      width: min(760px, 100%);
+      padding-bottom: min(7vh, 56px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(255, 255, 255, .72);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #7d4d35;
+      backdrop-filter: blur(14px);
+    }
+    h1 {
+      margin: 0;
+      max-width: 720px;
+      font-size: clamp(42px, 9vw, 96px);
+      line-height: .96;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+    .hero-sub {
+      max-width: 580px;
+      margin: 18px 0 0;
+      color: #4b4144;
+      font-size: clamp(16px, 2.4vw, 22px);
+      line-height: 1.7;
+      font-weight: 600;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-weight: 900;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:active { transform: translateY(1px) scale(.99); }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+      box-shadow: 0 14px 32px rgba(255, 95, 136, .32);
+    }
+    .btn-ghost {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .72);
+      border-color: rgba(32, 27, 28, .1);
+      backdrop-filter: blur(12px);
+    }
+    .competition-badge {
+      position: absolute;
+      top: 18px;
+      right: clamp(18px, 5vw, 56px);
+      z-index: 2;
+      width: min(150px, 30vw);
+      padding: 10px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(255, 255, 255, .8);
+      border-radius: var(--radius);
+      backdrop-filter: blur(12px);
+    }
+
+    .section {
+      padding: clamp(64px, 10vw, 118px) clamp(18px, 5vw, 64px);
+      position: relative;
+    }
+    .section-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .7fr) minmax(280px, .3fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--pink);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .insight {
+      min-height: 178px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .74);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(77, 44, 35, .06);
+    }
+    .insight strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+    .insight p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 36px;
+      padding: 14px 0;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: calc(50% - 1px);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(var(--pink), var(--yellow), var(--mint));
+    }
+    .moment {
+      display: grid;
+      grid-template-columns: 1fr 72px 1fr;
+      align-items: center;
+      gap: 18px;
+      margin: 24px 0;
+    }
+    .moment:nth-child(even) .moment-card { grid-column: 3; }
+    .moment:nth-child(even) .year { grid-column: 2; grid-row: 1; }
+    .moment-card {
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .moment-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .moment-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .year {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 1000;
+      box-shadow: 0 12px 28px rgba(32, 27, 28, .2);
+      z-index: 2;
+    }
+
+    .story-stage {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .stage-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .stage-tabs {
+      position: sticky;
+      top: 78px;
+      display: grid;
+      gap: 10px;
+    }
+    .tab {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: left;
+      font-weight: 900;
+    }
+    .tab.active {
+      color: var(--ink);
+      border-color: rgba(255, 95, 136, .42);
+      background: linear-gradient(135deg, rgba(255, 95, 136, .14), rgba(255, 217, 90, .16));
+    }
+    .stage-panel {
+      display: none;
+      min-height: 520px;
+      padding: clamp(22px, 4vw, 44px);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255, 250, 246, .92), rgba(255, 255, 255, .98)),
+        radial-gradient(circle at 88% 12%, rgba(87, 199, 182, .2), transparent 18rem);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+    }
+    .stage-panel.active { display: block; }
+    .poster-label {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 95, 136, .12);
+      color: var(--pink);
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .stage-panel h3 {
+      margin: 16px 0 10px;
+      font-size: clamp(28px, 5vw, 54px);
+      line-height: 1.08;
+    }
+    .quote {
+      margin: 0 0 22px;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    .mini-posters {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .mini-poster {
+      min-height: 174px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .mini-poster::after {
+      content: "";
+      position: absolute;
+      width: 96px;
+      height: 96px;
+      right: -24px;
+      bottom: -24px;
+      background: var(--accent, var(--pink));
+      border-radius: 50%;
+      opacity: .16;
+    }
+    .mini-poster b {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 19px;
+    }
+    .mini-poster span {
+      color: var(--muted);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .notebook {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .wrong-book {
+      padding: 24px;
+      border: 1px solid rgba(32, 27, 28, .16);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(#fff 31px, rgba(107, 156, 255, .16) 32px),
+        linear-gradient(90deg, rgba(255, 95, 136, .36) 64px, transparent 66px);
+      background-size: 100% 32px, 100% 100%;
+      box-shadow: var(--shadow);
+    }
+    .mistake {
+      padding-left: 58px;
+      margin: 0 0 28px;
+    }
+    .mistake h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    .mistake p {
+      margin: 0 0 9px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .correction {
+      display: inline;
+      color: #126f63;
+      font-weight: 900;
+      background: rgba(87, 199, 182, .14);
+      box-shadow: inset 0 -8px rgba(87, 199, 182, .18);
+    }
+    .interaction-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .field {
+      width: 100%;
+      min-height: 112px;
+      resize: vertical;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fffaf6;
+      outline: none;
+      line-height: 1.7;
+    }
+    .field:focus {
+      border-color: rgba(255, 95, 136, .56);
+      box-shadow: 0 0 0 4px rgba(255, 95, 136, .12);
+    }
+    .user-note {
+      margin-top: 16px;
+      padding: 14px;
+      min-height: 70px;
+      background: rgba(255, 217, 90, .18);
+      border: 1px dashed rgba(32, 27, 28, .2);
+      border-radius: var(--radius);
+      color: #5e4a18;
+      line-height: 1.7;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .media-card {
+      min-height: 238px;
+      padding: 20px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 26px rgba(77, 44, 35, .08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .week {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--accent, var(--pink));
+      font-weight: 1000;
+    }
+    .media-card h3 { margin: 16px 0 8px; font-size: 22px; }
+    .media-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .channels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      background: rgba(32, 27, 28, .06);
+      border-radius: 999px;
+      color: #51474a;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .wish-zone {
+      background:
+        linear-gradient(135deg, rgba(32, 27, 28, .94), rgba(77, 43, 69, .9)),
+        radial-gradient(circle at 20% 30%, rgba(255, 95, 136, .36), transparent 20rem);
+      color: #fff;
+    }
+    .wish-zone .lead,
+    .wish-zone .kicker { color: rgba(255, 255, 255, .72); }
+    .wish-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, .55fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .blind-box {
+      min-height: 520px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .04)),
+        radial-gradient(circle at 72% 18%, rgba(255, 217, 90, .28), transparent 14rem);
+      padding: clamp(22px, 4vw, 36px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .24);
+    }
+    .box-visual {
+      width: min(340px, 80%);
+      aspect-ratio: 1;
+      margin: 22px auto;
+      display: grid;
+      place-items: center;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: floatBox 4s ease-in-out infinite;
+    }
+    @keyframes floatBox {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+    .box-face {
+      width: 86%;
+      height: 86%;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, #fff, #ffe9ed 42%, #c9f4ed),
+        repeating-linear-gradient(45deg, rgba(255, 95, 136, .16) 0 8px, transparent 8px 18px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .32);
+      border: 8px solid rgba(255, 255, 255, .8);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-weight: 1000;
+      text-align: center;
+      line-height: 1.2;
+      font-size: clamp(28px, 6vw, 46px);
+    }
+    .box-face small {
+      display: block;
+      margin-top: 8px;
+      color: var(--pink);
+      font-size: 14px;
+      letter-spacing: .12em;
+    }
+    .wish-form {
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .1);
+      backdrop-filter: blur(16px);
+    }
+    .wish-form label {
+      display: block;
+      margin: 16px 0 8px;
+      color: rgba(255, 255, 255, .82);
+      font-weight: 900;
+    }
+    .wish-form input,
+    .wish-form textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: var(--radius);
+      color: #fff;
+      background: rgba(0, 0, 0, .18);
+      padding: 13px 14px;
+      outline: none;
+    }
+    .wish-form textarea { min-height: 130px; resize: vertical; line-height: 1.7; }
+    .ip-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .ip-options input { position: absolute; opacity: 0; pointer-events: none; }
+    .ip-card {
+      min-height: 148px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 8px;
+      padding: 10px 10px 12px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: var(--radius);
+      color: rgba(255, 255, 255, .7);
+      text-align: center;
+      font-weight: 900;
+      font-size: 13px;
+      background: rgba(255, 255, 255, .06);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .ip-card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .12);
+    }
+    .ip-card span {
+      display: block;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .ip-options input:checked + .ip-card {
+      color: #201b1c;
+      background: #fff;
+      border-color: #fff;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, .18);
+      transform: translateY(-2px);
+    }
+    .wish-result {
+      display: none;
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .92);
+      color: var(--ink);
+      line-height: 1.8;
+    }
+    .wish-result.show { display: block; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .metric {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+      text-align: center;
+    }
+    .metric b {
+      display: block;
+      font-size: clamp(28px, 4vw, 46px);
+      color: var(--pink);
+      line-height: 1;
+    }
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .footer {
+      padding: 34px clamp(18px, 5vw, 64px);
+      color: rgba(255, 255, 255, .72);
+      background: #171314;
+    }
+    .footer-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+    }
+    .footer-logo { width: 150px; opacity: .92; }
+    .footer b { color: #fff; }
+
+    .float-tools {
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 25;
+      display: grid;
+      gap: 10px;
+    }
+    .tool-btn {
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(32, 27, 28, .16);
+      font-weight: 1000;
+    }
+
+    .reveal,
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .rotate-tip {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      place-items: center;
+      padding: 24px;
+      background: rgba(255, 250, 246, .96);
+      text-align: center;
+    }
+    .rotate-tip div {
+      width: min(360px, 100%);
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 860px) {
+      .competition-badge { top: 70px; }
+      .nav { padding: 10px 12px; }
+      .brand span { display: none; }
+      .nav-links { gap: 2px; overflow-x: auto; }
+      .nav-links a { padding: 8px; font-size: 12px; }
+      .section-head,
+      .stage-shell,
+      .notebook,
+      .wish-layout,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .insight-grid,
+      .media-grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+      .timeline::before { left: 36px; }
+      .moment,
+      .moment:nth-child(even) {
+        grid-template-columns: 72px 1fr;
+      }
+      .moment .year,
+      .moment:nth-child(even) .year {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .moment .moment-card,
+      .moment:nth-child(even) .moment-card {
+        grid-column: 2;
+      }
+      .stage-tabs {
+        position: static;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .tab {
+        min-height: 74px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .tab small { display: none; }
+      .mini-posters { grid-template-columns: 1fr; }
+      .ip-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .ip-card {
+        min-height: 120px;
+        padding: 8px;
+        font-size: 11px;
+      }
+      .float-tools { display: none; }
+      .hero { padding-left: 18px; padding-right: 18px; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) and (max-width: 920px) {
+      .rotate-tip { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
-<body class="scroll-smooth hide-scrollbar bg-white text-pop-dark overflow-x-hidden">
-    <!-- 加载页 -->
-    <div id="loading" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center transition-opacity duration-1000">
-        <div class="w-24 h-24 mb-6 relative">
-            <div class="absolute inset-0 border-4 border-pop-pink rounded-full animate-ping opacity-20"></div>
-            <div class="absolute inset-0 border-4 border-pop-pink rounded-full animate-spin border-t-transparent"></div>
-            <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-pop-pink">POP</div>
-        </div>
-        <p class="text-pop-dark/70 animate-pulse">正在打开你的成长盲盒...</p>
+<body>
+  <div class="rotate-tip" aria-hidden="true">
+    <div>
+      <h2>竖屏体验更完整</h2>
+      <p class="lead">本作品为 1-C2 微信类移动终端 HTML5 设计制作，建议旋转回竖屏查看。</p>
     </div>
+  </div>
 
-    <!-- 导航栏 -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md shadow-sm transition-all duration-300 -translate-y-full">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="font-bold text-pop-pink text-xl">POP MART</div>
-            <div class="flex space-x-6 text-sm">
-                <a href="#section1" class="hover:text-pop-pink transition-colors">初见</a>
-                <a href="#section2" class="hover:text-pop-pink transition-colors">成长</a>
-                <a href="#section3" class="hover:text-pop-pink transition-colors">同行</a>
-                <a href="#wish" class="hover:text-pop-pink transition-colors">心愿</a>
-            </div>
-        </div>
-    </nav>
+  <nav class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="返回首页">
+      <span class="brand-dot">20</span>
+      <span>同岁同行</span>
+    </a>
+    <div class="nav-links" aria-label="页面导航">
+      <a href="#insight">洞察</a>
+      <a href="#stages">三阶段</a>
+      <a href="#mistake">错题本</a>
+      <a href="#wish">心愿</a>
+    </div>
+  </nav>
 
-    <!-- 首页 -->
-    <section id="home" class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-pop-pink/10 to-pop-blue/10 z-0"></div>
-        <div class="absolute top-20 left-10 w-20 h-20 bg-pop-yellow/30 rounded-full blur-xl animate-pulse"></div>
-        <div class="absolute bottom-20 right-10 w-32 h-32 bg-pop-purple/20 rounded-full blur-xl animate-pulse delay-1000"></div>
-        
-        <div class="container mx-auto px-6 text-center z-10">
-            <p class="text-pop-pink font-medium mb-2 animate-fadeIn">2006 - 2026</p>
-            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-4 text-shadow-lg leading-tight">
-                同岁同行<br>
-                <span class="text-pop-pink">一起长大</span>
-            </h1>
-            <p class="text-lg text-pop-dark/70 mb-10 max-w-md mx-auto">
-                2006年，我们同时来到这个世界<br>
-                2026年，我们一起奔赴未来
-            </p>
-            <a href="#section1" class="inline-block bg-pop-pink text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                开启成长之旅 <i class="fa fa-arrow-down ml-2"></i>
-            </a>
+  <main class="app" id="top">
+    <section class="hero">
+      <div class="hero-media">
+        <img src="assets/hero-toy-campus.png" alt="原创潮玩角色站在校园晨光中的20周年主题视觉" />
+      </div>
+      <img class="competition-badge" src="assets/ncda-logo.png" alt="未来设计师全国高校数字艺术设计大赛 logo" />
+      <div class="hero-copy reveal visible">
+        <p class="eyebrow">2006 - 2026 POP MART 20周年校园共创</p>
+        <h1>同岁同行<br />一起长大</h1>
+        <p class="hero-sub">2006年，我们同时来到这个世界。2026年，20岁的泡泡玛特和20岁的你，一起把迷茫、热爱与勇气装进同一个成长盲盒。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#insight">开启成长盲盒</a>
+          <a class="btn btn-ghost" href="#wish">写给20岁的自己</a>
         </div>
-        
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-            <i class="fa fa-chevron-down text-pop-dark/30"></i>
-        </div>
+      </div>
     </section>
 
-    <!-- 第一阶段：初见 -->
-    <section id="section1" class="min-h-screen py-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="inline-block bg-pop-blue/10 text-pop-blue px-4 py-1 rounded-full text-sm font-medium mb-4">第一阶段</span>
-                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">初见 · 见证彼此的成长</h2>
-                    <p class="text-pop-dark/70 max-w-2xl mx-auto">
-                        2006年，泡泡玛特诞生；2016年，Molly与你相遇<br>
-                        每一个开始，都值得被记住
-                    </p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-10 items-center">
-                    <div class="order-2 md:order-1">
-                        <div class="space-y-6">
-                            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-10 h-10 bg-pop-yellow rounded-full flex items-center justify-center text-white mr-3">
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <h3 class="font-bold text-lg">2006 诞生启程</h3>
-                                </div>
-                                <p class="text-pop-dark/70">
-                                    怀揣对未来的憧憬，泡泡玛特正式创立。那时的我们，和你一样，对世界充满好奇。
-                                </p>
-                            </div>
-                            
-                            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-10 h-10 bg-pop-pink rounded-full flex items-center justify-center text-white mr-3">
-                                        <i class="fa fa-gift"></i>
-                                    </div>
-                                    <h3 class="font-bold text-lg">2016 第一次相遇</h3>
-                                </div>
-                                <p class="text-pop-dark/70">
-                                    你拥有了第一只Molly，从此成长路上多了一个伙伴。抽盲盒的快乐，成为青春里的小确幸。
-                                </p>
-                            </div>
-                            
-                            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-                                <div class="flex items-center mb-3">
-                                    <div class="w-10 h-10 bg-pop-blue rounded-full flex items-center justify-center text-white mr-3">
-                                        <i class="fa fa-graduation-cap"></i>
-                                    </div>
-                                    <h3 class="font-bold text-lg">2019 初入校园</h3>
-                                </div>
-                                <p class="text-pop-dark/70">
-                                    你拖着行李走进大学校门，泡泡玛特也第一次走进校园。我们都对未来，充满了亮晶晶的期待。
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="order-1 md:order-2 relative">
-                        <div class="aspect-square bg-gradient-to-br from-pop-yellow/20 to-pop-pink/20 rounded-3xl flex items-center justify-center p-8">
-                            <div class="text-center">
-                                <div class="text-8xl mb-4">🎁</div>
-                                <p class="font-medium text-pop-dark/70">第一次拆盲盒的惊喜</p>
-                            </div>
-                        </div>
-                        <div class="absolute -top-5 -right-5 w-20 h-20 bg-pop-pink/10 rounded-full blur-xl"></div>
-                        <div class="absolute -bottom-5 -left-5 w-16 h-16 bg-pop-blue/10 rounded-full blur-xl"></div>
-                    </div>
-                </div>
-            </div>
+    <section class="section" id="insight">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">01 MARKET & BRAND INSIGHT</p>
+            <h2>潮玩不只是玩具，是和我们同龄的成长伙伴。</h2>
+          </div>
+          <p class="lead">策划案的核心突破，是把泡泡玛特从“收藏级潮玩”转译为“同龄同行者”：同样憧憬、同样试错、同样在压力中守住热爱。</p>
         </div>
+        <div class="insight-grid">
+          <article class="insight reveal">
+            <strong>同岁</strong>
+            <p>品牌创立于2006年，与当代20岁青年站在同一条成长时间线上，天然拥有“同龄人”叙事入口。</p>
+          </article>
+          <article class="insight reveal">
+            <strong>同长</strong>
+            <p>从潮流杂货铺到自有IP矩阵，品牌在试错中完成转型，呼应青年从校园到社会的自我迭代。</p>
+          </article>
+          <article class="insight reveal">
+            <strong>同行</strong>
+            <p>考研、求职、内卷、热爱，每个压力场景都可以被潮玩陪伴感重新点亮。</p>
+          </article>
+        </div>
+
+        <div class="timeline" aria-label="品牌和青年共同成长时间线">
+          <div class="moment reveal">
+            <div class="moment-card">
+              <h3>诞生启程</h3>
+              <p>泡泡玛特正式创立。那一年，许多参赛作品的目标受众也刚刚来到世界，带着同样亮晶晶的期待出发。</p>
+            </div>
+            <div class="year">2006</div>
+          </div>
+          <div class="moment reveal">
+            <div class="moment-card">
+              <h3>探索试错</h3>
+              <p>签约 Molly、推出盲盒，品牌从渠道商转向自有 IP 运营；青年也在校园、选择和兴趣里寻找自己的答案。</p>
+            </div>
+            <div class="year">2016</div>
+          </div>
+          <div class="moment reveal">
+            <div class="moment-card">
+              <h3>坚守热爱</h3>
+              <p>20岁的泡泡玛特与20岁的你一起面对未来：不回避压力，也不放弃喜欢。</p>
+            </div>
+            <div class="year">2026</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 第二阶段：成长 -->
-    <section id="section2" class="min-h-screen py-20 bg-gray-50 relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="inline-block bg-pop-purple/10 text-pop-purple px-4 py-1 rounded-full text-sm font-medium mb-4">第二阶段</span>
-                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">成长 · 不完美的勇气</h2>
-                    <p class="text-pop-dark/70 max-w-2xl mx-auto">
-                        不是每一次设计都能成功，不是每一次考试都能满分<br>
-                        所有的试错，都是成长的勋章
-                    </p>
-                </div>
-                
-                <!-- 成长错题本 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-10">
-                    <div class="bg-pop-yellow/10 p-4 border-b border-gray-100">
-                        <h3 class="font-bold text-lg flex items-center">
-                            <i class="fa fa-book mr-2 text-pop-yellow"></i>
-                            泡泡玛特成长错题本
-                        </h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="space-y-6">
-                            <div class="border-l-4 border-pop-pink pl-4 py-2">
-                                <h4 class="font-bold mb-1">错题1：盲目扩张，门店亏损</h4>
-                                <p class="text-pop-dark/70 text-sm mb-2">
-                                    2010-2015年，模仿"屈臣氏"做综合潮品零售，品类杂、利润薄，大量门店持续亏损。
-                                </p>
-                                <p class="text-pop-pink text-sm font-medium">
-                                    ✅ 改正：2016年签约Molly，推出盲盒，从渠道商转向自有IP运营
-                                </p>
-                            </div>
-                            
-                            <div class="border-l-4 border-pop-blue pl-4 py-2">
-                                <h4 class="font-bold mb-1">错题2：依赖代理，被卡脖子</h4>
-                                <p class="text-pop-dark/70 text-sm mb-2">
-                                    2014-2016年，靠代理Sonny Angel爆火，但无版权，扩店受限，最终丢失代理权。
-                                </p>
-                                <p class="text-pop-blue text-sm font-medium">
-                                    ✅ 改正：大力孵化自有IP，打造Molly、Dimoo、SKULLPANDA等头部IP矩阵
-                                </p>
-                            </div>
-                            
-                            <div class="border-l-4 border-pop-purple pl-4 py-2">
-                                <h4 class="font-bold mb-1">错题3：品控瑕疵，用户不满</h4>
-                                <p class="text-pop-dark/70 text-sm mb-2">
-                                    早期常收到用户关于品控瑕疵、售后烦琐、热门款缺货的反馈。
-                                </p>
-                                <p class="text-pop-purple text-sm font-medium">
-                                    ✅ 改正：持续优化品控流程，简化退换货条件，实施限购+实名+分阶段补货
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8 text-center">
-                            <p class="text-pop-dark/70 italic">
-                                "这题错了，但是我们的方向对了。<br>
-                                走弯路不可怕，可怕的是不敢出发。"
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 用户错题征集 -->
-                <div class="text-center">
-                    <p class="mb-4 text-pop-dark/70">你有什么成长错题？写下来，和泡泡玛特一起改正</p>
-                    <button id="addMistake" class="bg-pop-purple text-white px-6 py-2 rounded-full font-medium shadow hover:shadow-lg transition-shadow">
-                        写下我的成长错题
-                    </button>
-                </div>
-            </div>
+    <section class="section story-stage" id="stages">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">02 CREATIVE STRATEGY</p>
+            <h2>三阶段海报叙事，变成可滑动、可参与、可分享的 H5。</h2>
+          </div>
+          <p class="lead">将策划案中的“初见 - 成长 - 同行”改造成移动端交互分镜，让评委在滑动中看到完整传播逻辑。</p>
         </div>
+        <div class="stage-shell reveal">
+          <div class="stage-tabs" role="tablist" aria-label="传播阶段">
+            <button class="tab active" data-stage="first" type="button">初见 <small>见证彼此</small></button>
+            <button class="tab" data-stage="grow" type="button">成长 <small>不完美勇气</small></button>
+            <button class="tab" data-stage="with" type="button">同行 <small>向阳而生</small></button>
+          </div>
+          <div>
+            <article class="stage-panel active" id="first">
+              <span class="poster-label">第一阶段</span>
+              <h3>每一个开始，都值得被记住。</h3>
+              <p class="quote">“2006年，我们同时来到这个世界。”从第一份礼物、第一次相遇，到第一次走进校园，泡泡玛特成为青春里可被珍藏的伙伴。</p>
+              <div class="mini-posters">
+                <div class="mini-poster" style="--accent: var(--yellow)">
+                  <b>诞生</b>
+                  <span>同时出发，同样憧憬。把品牌起点和青年出生记忆绑定。</span>
+                </div>
+                <div class="mini-poster" style="--accent: var(--mint)">
+                  <b>第一份礼物</b>
+                  <span>人生的第一份惊喜，都值得珍藏。盲盒情绪被转译为成长惊喜。</span>
+                </div>
+              </div>
+            </article>
+            <article class="stage-panel" id="grow">
+              <span class="poster-label">第二阶段</span>
+              <h3>这题错了，但是方向对了。</h3>
+              <p class="quote">用“成长错题本”坦诚呈现品牌试错：门店亏损、代理依赖、品控反馈、热门款缺货。真诚不是弱点，而是让年轻人愿意共情的入口。</p>
+              <div class="mini-posters">
+                <div class="mini-poster" style="--accent: var(--pink)">
+                  <b>产品迭代</b>
+                  <span>从潮流杂货铺到自有IP公司，所有试错都是成长的勋章。</span>
+                </div>
+                <div class="mini-poster" style="--accent: var(--blue)">
+                  <b>用户反馈</b>
+                  <span>认真倾听每一个声音，持续优化品控、补货和售后体验。</span>
+                </div>
+              </div>
+            </article>
+            <article class="stage-panel" id="with">
+              <span class="poster-label">第三阶段</span>
+              <h3>别人卷速度，我们一起卷热爱。</h3>
+              <p class="quote">考研路上、求职路上、内卷时代、未来可期。把潮玩 IP 放到真实青年场景中，形成“陪伴我向阳而生”的情绪价值。</p>
+              <div class="mini-posters">
+                <div class="mini-poster" style="--accent: var(--violet)">
+                  <b>并肩作战</b>
+                  <span>你在为梦想熬夜，泡泡玛特陪你一起。</span>
+                </div>
+                <div class="mini-poster" style="--accent: var(--coral)">
+                  <b>未来可期</b>
+                  <span>20岁的泡泡玛特，20岁的你，我们一起奔赴未来。</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 第三阶段：同行 -->
-    <section id="section3" class="min-h-screen py-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="inline-block bg-pop-pink/10 text-pop-pink px-4 py-1 rounded-full text-sm font-medium mb-4">第三阶段</span>
-                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">同行 · 坦然向阳而生</h2>
-                    <p class="text-pop-dark/70 max-w-2xl mx-auto">
-                        你在为梦想熬夜，泡泡玛特陪你一起<br>
-                        别怕前路未知，我们并肩作战
-                    </p>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-6 mb-12">
-                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:-translate-y-2 transition-transform">
-                        <div class="w-16 h-16 bg-pop-pink/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fa fa-book text-2xl text-pop-pink"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">考研路上</h3>
-                        <p class="text-pop-dark/70 text-sm">
-                            深夜的自习室，桌上的咖啡，还有陪伴你的Molly。考研加油，你不是一个人在战斗。
-                        </p>
-                    </div>
-                    
-                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:-translate-y-2 transition-transform">
-                        <div class="w-16 h-16 bg-pop-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fa fa-briefcase text-2xl text-pop-blue"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">求职路上</h3>
-                        <p class="text-pop-dark/70 text-sm">
-                            一次次的面试，一次次的修改简历。别怕，泡泡玛特为你打气，好工作就在前方。
-                        </p>
-                    </div>
-                    
-                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:-translate-y-2 transition-transform">
-                        <div class="w-16 h-16 bg-pop-yellow/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fa fa-heart text-2xl text-pop-yellow"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">热爱路上</h3>
-                        <p class="text-pop-dark/70 text-sm">
-                            别人都在卷速度，我们一起卷热爱。保持初心，做自己喜欢的事，就是最酷的人生。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="bg-gradient-to-r from-pop-pink/10 to-pop-blue/10 rounded-2xl p-8 text-center">
-                    <h3 class="text-2xl font-bold mb-4">20岁的泡泡玛特，20岁的你</h3>
-                    <p class="text-pop-dark/70 mb-6">
-                        我们一起经历了憧憬、迷茫和压力<br>
-                        未来，我们继续一起长大
-                    </p>
-                    <a href="#wish" class="inline-block bg-pop-pink text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        许下成长心愿 <i class="fa fa-star ml-2"></i>
-                    </a>
-                </div>
-            </div>
+    <section class="section" id="mistake">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">03 INTERACTION DESIGN</p>
+            <h2>成长错题本：把品牌真诚，变成用户的参与。</h2>
+          </div>
+          <p class="lead">用户可以写下自己的成长错题，页面会生成一张“已订正”的成长便签，用于截图分享或线下打卡墙延展。</p>
         </div>
+        <div class="notebook">
+          <div class="wrong-book reveal">
+            <div class="mistake">
+              <h3>错题 01：盲目扩张，门店亏损</h3>
+              <p>2010-2015年，品牌以潮流零售起步，品类杂、利润薄，门店持续承压。</p>
+              <span class="correction">订正：2016年签约核心IP、推出盲盒，从渠道零售转向自有IP运营。</span>
+            </div>
+            <div class="mistake">
+              <h3>错题 02：依赖代理，被卡脖子</h3>
+              <p>曾依靠外部代理爆火，却因版权受限陷入危机。</p>
+              <span class="correction">订正：孵化 Molly、Dimoo、SKULLPANDA 等自主IP矩阵，建立长期资产。</span>
+            </div>
+            <div class="mistake">
+              <h3>错题 03：用户反馈，必须听见</h3>
+              <p>品控、售后、缺货和黄牛炒作，都是用户真实在意的问题。</p>
+              <span class="correction">订正：优化品控和售后，采用限购、实名、分阶段补货，保障普通用户体验。</span>
+            </div>
+          </div>
+          <aside class="interaction-card reveal">
+            <h3>写下你的成长错题</h3>
+            <p class="lead">不是每一次选择都能满分，但每一次尝试都有意义。</p>
+            <textarea class="field" id="mistakeInput" maxlength="90" placeholder="例如：我曾经害怕失败，所以错过了一次展示自己的机会。"></textarea>
+            <button class="btn btn-primary" id="fixMistake" type="button" style="width:100%; margin-top:12px;">生成订正便签</button>
+            <div class="user-note" id="userNote">你的订正会出现在这里。</div>
+          </aside>
+        </div>
+      </div>
     </section>
 
-    <!-- 心愿盲盒 -->
-    <section id="wish" class="min-h-screen py-20 bg-gray-50 relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-2xl mx-auto">
-                <div class="text-center mb-12">
-                    <span class="inline-block bg-pop-yellow/10 text-pop-yellow px-4 py-1 rounded-full text-sm font-medium mb-4">成长心愿</span>
-                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">你的心愿盲盒</h2>
-                    <p class="text-pop-dark/70">
-                        写下你的20岁心愿，放进泡泡玛特心愿盲盒<br>
-                        十年后，我们一起打开它
-                    </p>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg p-8">
-                    <form id="wishForm" class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2" for="name">你的名字</label>
-                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pop-pink/50" placeholder="请输入你的名字" required>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2" for="wish">你的20岁心愿</label>
-                            <textarea id="wish" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pop-pink/50" placeholder="写下你对未来的期待..." required></textarea>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">选择你的守护IP</label>
-                            <div class="grid grid-cols-3 gap-4">
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="ip" value="molly" class="sr-only peer" checked>
-                                    <div class="border-2 border-gray-200 rounded-lg p-4 text-center peer-checked:border-pop-pink peer-checked:bg-pop-pink/5 transition-all">
-                                        <div class="text-3xl mb-1">👧</div>
-                                        <p class="text-sm">Molly</p>
-                                    </div>
-                                </label>
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="ip" value="dimoo" class="sr-only peer">
-                                    <div class="border-2 border-gray-200 rounded-lg p-4 text-center peer-checked:border-pop-blue peer-checked:bg-pop-blue/5 transition-all">
-                                        <div class="text-3xl mb-1">👦</div>
-                                        <p class="text-sm">Dimoo</p>
-                                    </div>
-                                </label>
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="ip" value="skullpanda" class="sr-only peer">
-                                    <div class="border-2 border-gray-200 rounded-lg p-4 text-center peer-checked:border-pop-purple peer-checked:bg-pop-purple/5 transition-all">
-                                        <div class="text-3xl mb-1">💀</div>
-                                        <p class="text-sm">SKULLPANDA</p>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-pop-pink text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            生成我的心愿盲盒
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- 心愿结果（默认隐藏） -->
-                <div id="wishResult" class="hidden mt-8 bg-white rounded-2xl shadow-lg p-8 text-center">
-                    <div class="w-24 h-24 bg-pop-yellow/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fa fa-gift text-4xl text-pop-yellow"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">你的心愿已存入盲盒</h3>
-                    <p id="wishText" class="text-pop-dark/70 mb-6"></p>
-                    <p class="text-sm text-pop-dark/50 mb-6">
-                        心愿编号：<span id="wishId"></span><br>
-                        封存时间：2026年6月3日
-                    </p>
-                    <button id="shareWish" class="bg-pop-blue text-white px-6 py-2 rounded-full font-medium shadow hover:shadow-lg transition-shadow">
-                        分享我的心愿 <i class="fa fa-share-alt ml-2"></i>
-                    </button>
-                </div>
-            </div>
+    <section class="section" id="media">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">04 MEDIA & CAMPUS PLAN</p>
+            <h2>3周传播节奏，把线上话题和校园打卡闭环。</h2>
+          </div>
+          <p class="lead">H5 不只展示创意，也承接活动入口：对比照征集、成长错题本、校园海报展、同岁同行打卡墙。</p>
         </div>
+        <div class="media-grid">
+          <article class="media-card reveal" style="--accent: var(--pink)">
+            <div>
+              <div class="week">W1</div>
+              <h3>预热期</h3>
+              <p>发布第一阶段海报，发起 #我的20岁成长对比照#，沉淀初始UGC。</p>
+            </div>
+            <div class="channels"><span class="chip">小红书</span><span class="chip">抖音</span><span class="chip">微博超话</span></div>
+          </article>
+          <article class="media-card reveal" style="--accent: var(--violet)">
+            <div>
+              <div class="week">W2</div>
+              <h3>爆发期</h3>
+              <p>开展“成长错题本”征集，邀请校园KOC和情感/知识类KOL深度解读。</p>
+            </div>
+            <div class="channels"><span class="chip">KOC</span><span class="chip">KOL</span><span class="chip">话题挑战</span></div>
+          </article>
+          <article class="media-card reveal" style="--accent: var(--mint)">
+            <div>
+              <div class="week">W3</div>
+              <h3>延续期</h3>
+              <p>落地校园海报展、打卡墙、心愿盲盒体验站，再将线下内容二次传播。</p>
+            </div>
+            <div class="channels"><span class="chip">校园社群</span><span class="chip">表白墙</span><span class="chip">线下展</span></div>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <!-- 页脚 -->
-    <footer class="bg-pop-dark text-white py-10">
-        <div class="container mx-auto px-6 text-center">
-            <div class="font-bold text-2xl mb-4">POP MART</div>
-            <p class="text-white/70 mb-6">
-                同岁同行，一起长大<br>
-                泡泡玛特20周年
-            </p>
-            <p class="text-white/50 text-sm">
-                NCDA全国大学生数字艺术设计大赛 | 1-C2 HTML5设计
-            </p>
+    <section class="section wish-zone" id="wish">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">05 WISH BLIND BOX</p>
+            <h2>给20岁的自己，封存一枚未来盲盒。</h2>
+          </div>
+          <p class="lead">对应策划案中的“实体邮筒 / 电子邮箱投递”，H5 里生成个人心愿编号，便于分享、截图和线下导流。</p>
         </div>
-    </footer>
+        <div class="wish-layout">
+          <div class="blind-box reveal">
+            <div class="box-visual" aria-hidden="true">
+              <div class="box-face">20<br />WISH<small>OPEN IN FUTURE</small></div>
+            </div>
+            <p class="quote" style="color: rgba(255,255,255,.78);">“2006年我____，2026年我____。”把这句话补完整，你就拥有了一枚属于自己的同岁同行心愿盲盒。</p>
+          </div>
+          <form class="wish-form reveal" id="wishForm">
+            <label for="name">你的名字</label>
+            <input id="name" maxlength="16" placeholder="输入昵称" required />
+            <label for="wishText">写给20岁的自己</label>
+            <textarea id="wishText" maxlength="120" placeholder="我想对未来的自己说..." required></textarea>
+            <label>选择陪你同行的IP</label>
+            <div class="ip-options">
+              <label>
+                <input type="radio" name="ip" value="Molly" checked />
+                <span class="ip-card">
+                  <img src="assets/ip-molly.png" alt="Molly 同行IP形象" />
+                  <span>Molly</span>
+                </span>
+              </label>
+              <label>
+                <input type="radio" name="ip" value="Dimoo" />
+                <span class="ip-card">
+                  <img src="assets/ip-dimoo.png" alt="Dimoo 同行IP形象" />
+                  <span>Dimoo</span>
+                </span>
+              </label>
+              <label>
+                <input type="radio" name="ip" value="SKULLPANDA" />
+                <span class="ip-card">
+                  <img src="assets/ip-skullpanda.png" alt="SKULLPANDA 同行IP形象" />
+                  <span>SKULLPANDA</span>
+                </span>
+              </label>
+            </div>
+            <button class="btn btn-primary" type="submit" style="width:100%; margin-top:18px;">封存心愿</button>
+            <div class="wish-result" id="wishResult"></div>
+          </form>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        // 加载页动画
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('opacity-0');
-                setTimeout(() => {
-                    document.getElementById('loading').style.display = 'none';
-                }, 1000);
-            }, 1500);
-        });
+    <section class="section" id="result">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">06 EFFECT ESTIMATION</p>
+            <h2>低成本校园渗透，形成可追踪传播闭环。</h2>
+          </div>
+          <p class="lead">预算控制在 14000 元，目标覆盖校园、引导 UGC、沉淀私域粉丝，并联动线下门店转化。</p>
+        </div>
+        <div class="metrics">
+          <div class="metric reveal"><b>50万</b><span>全网话题曝光量</span></div>
+          <div class="metric reveal"><b>20万</b><span>话题互动量</span></div>
+          <div class="metric reveal"><b>5000+</b><span>用户UGC内容</span></div>
+          <div class="metric reveal"><b>1.79元</b><span>预估单次互动成本</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        // 导航栏滚动显示
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.remove('-translate-y-full');
-            } else {
-                navbar.classList.add('-translate-y-full');
-            }
-        });
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <p><b>作品名称：</b>同岁同行，一起长大 - 泡泡玛特20周年HTML5互动作品</p>
+        <p><b>参赛类别：</b>未来设计师全国高校数字艺术设计大赛 1-C2 微信类移动终端 / HTML5设计制作作品</p>
+        <p><b>参赛日期：</b>2026年6月3日</p>
+      </div>
+      <img class="footer-logo" src="assets/ncda-logo-white.png" alt="未来设计师全国高校数字艺术设计大赛白色 logo" />
+    </div>
+  </footer>
 
-        // 成长错题按钮
-        document.getElementById('addMistake').addEventListener('click', () => {
-            const mistake = prompt('请写下你的成长错题：');
-            if (mistake && mistake.trim() !== '') {
-                alert('你的成长错题已记录！和泡泡玛特一起，在错误中成长吧～');
-            }
-        });
+  <div class="float-tools" aria-label="快捷操作">
+    <button class="tool-btn" id="musicBtn" type="button" aria-label="开启或关闭音效">♪</button>
+    <button class="tool-btn" id="topBtn" type="button" aria-label="返回顶部">↑</button>
+  </div>
 
-        // 心愿盲盒表单提交
-        document.getElementById('wishForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const wish = document.getElementById('wish').value;
-            const wishId = Math.random().toString(36).substring(2, 10).toUpperCase();
-            
-            document.getElementById('wishText').textContent = `"${wish}" —— ${name}`;
-            document.getElementById('wishId').textContent = wishId;
-            
-            document.getElementById('wishForm').classList.add('hidden');
-            document.getElementById('wishResult').classList.remove('hidden');
-        });
+  <script>
+    const nav = document.getElementById("nav");
+    const topBtn = document.getElementById("topBtn");
+    const musicBtn = document.getElementById("musicBtn");
+    const revealItems = document.querySelectorAll(".reveal");
+    const tabs = document.querySelectorAll(".tab");
+    const panels = document.querySelectorAll(".stage-panel");
+    const mistakeInput = document.getElementById("mistakeInput");
+    const userNote = document.getElementById("userNote");
+    const wishForm = document.getElementById("wishForm");
+    const wishResult = document.getElementById("wishResult");
+    let audioContext;
+    let soundOn = false;
 
-        // 分享按钮
-        document.getElementById('shareWish').addEventListener('click', () => {
-            if (navigator.share) {
-                navigator.share({
-                    title: '我的泡泡玛特心愿盲盒',
-                    text: document.getElementById('wishText').textContent,
-                    url: window.location.href
-                });
-            } else {
-                alert('心愿已复制到剪贴板，快去分享给你的朋友吧！');
-                navigator.clipboard.writeText(document.getElementById('wishText').textContent + '\n' + window.location.href);
-            }
-        });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.16 });
+    revealItems.forEach((item) => observer.observe(item));
 
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("show", window.scrollY > 80);
+    }, { passive: true });
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const id = tab.dataset.stage;
+        tabs.forEach((item) => item.classList.toggle("active", item === tab));
+        panels.forEach((panel) => panel.classList.toggle("active", panel.id === id));
+        playTone(420, 0.04);
+      });
+    });
+
+    document.getElementById("fixMistake").addEventListener("click", () => {
+      const text = mistakeInput.value.trim();
+      if (!text) {
+        userNote.textContent = "先写下一道真实的成长错题，再把它订正成勇气。";
+        return;
+      }
+      userNote.innerHTML = `<strong>我的成长错题：</strong>${escapeHtml(text)}<br><strong>订正：</strong>这一次不算失败，它只是告诉我，下一步要更勇敢一点。`;
+      playTone(640, 0.08);
+    });
+
+    wishForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const text = document.getElementById("wishText").value.trim();
+      const ip = new FormData(wishForm).get("ip");
+      const code = `PM20-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+      wishResult.classList.add("show");
+      wishResult.innerHTML = `<strong>${escapeHtml(name)} 的心愿盲盒已封存</strong><br>同行IP：${ip}<br>心愿编号：${code}<br>“${escapeHtml(text)}”<br><small>截图分享，参与 #我的20岁成长对比照# 与校园打卡墙活动。</small>`;
+      playTone(760, 0.1);
+    });
+
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      playTone(520, 0.05);
+    });
+
+    musicBtn.addEventListener("click", () => {
+      soundOn = !soundOn;
+      musicBtn.textContent = soundOn ? "×" : "♪";
+      if (soundOn) playTone(680, 0.12);
+    });
+
+    function playTone(frequency, duration) {
+      if (!soundOn && duration !== 0.12) return;
+      audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.05, audioContext.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration + 0.02);
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+  </script>
 </body>
 </html>
