@@ -21,14 +21,27 @@
       --radius: 8px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+    html {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      overscroll-behavior-x: none;
+      scroll-behavior: smooth;
+    }
     body {
+      width: 100%;
+      max-width: 100%;
       margin: 0;
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
       color: var(--ink);
       background: var(--paper);
-      overflow-x: hidden;
+      overflow-x: clip;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
     }
     body.locked { overflow: hidden; }
     img { max-width: 100%; display: block; }
@@ -37,17 +50,34 @@
     a { color: inherit; text-decoration: none; }
 
     .app {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
       min-height: 100vh;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 247, 243, .96) 92%),
         radial-gradient(circle at 8% 20%, rgba(255, 217, 90, .24), transparent 28rem),
         radial-gradient(circle at 100% 6%, rgba(87, 199, 182, .18), transparent 24rem);
     }
+    .hero,
+    .section,
+    .footer,
+    .nav {
+      width: 100vw;
+      max-width: 100%;
+      overflow-x: clip;
+    }
+    h1, h2, h3, p, a, span, b, strong, small, label, button {
+      overflow-wrap: anywhere;
+    }
 
     .nav {
       position: fixed;
       inset: 0 0 auto;
       z-index: 30;
+      left: 0;
+      right: auto;
+      width: 100vw;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -79,6 +109,7 @@
       box-shadow: 0 8px 18px rgba(255, 95, 136, .25);
     }
     .nav-links {
+      max-width: calc(100vw - 24px);
       display: flex;
       gap: 8px;
       padding: 4px;
@@ -725,7 +756,7 @@
       position: fixed;
       right: 14px;
       bottom: 18px;
-      z-index: 25;
+      z-index: 90;
       display: grid;
       gap: 10px;
     }
@@ -746,6 +777,36 @@
     .tool-btn.music-waiting {
       color: var(--pink);
       outline: 2px solid rgba(255, 95, 136, .32);
+      outline-offset: 3px;
+    }
+    .music-toggle {
+      position: fixed;
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 100;
+      width: auto;
+      min-width: 92px;
+      height: 52px;
+      border: 0;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 16px;
+      color: var(--pink);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 14px 34px rgba(32, 27, 28, .22);
+      font-size: 15px;
+      font-weight: 1000;
+      backdrop-filter: blur(14px);
+    }
+    .music-toggle.music-active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+    }
+    .music-toggle.music-waiting {
+      outline: 3px solid rgba(255, 95, 136, .24);
       outline-offset: 3px;
     }
 
@@ -779,7 +840,13 @@
       .competition-badge { top: 70px; }
       .nav { padding: 10px 12px; }
       .brand span { display: none; }
-      .nav-links { gap: 2px; overflow-x: auto; }
+      .nav-links {
+        width: auto;
+        max-width: calc(100vw - 24px);
+        gap: 2px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+      }
       .nav-links a { padding: 8px; font-size: 12px; }
       .section-head,
       .stage-shell,
@@ -825,11 +892,16 @@
         padding: 8px;
         font-size: 11px;
       }
-      .float-tools {
-        right: 12px;
-        bottom: 92px;
-      }
+      .float-tools { display: none; }
       .float-tools #topBtn { display: none; }
+      .music-toggle {
+        right: 14px;
+        bottom: 72px;
+        min-width: 86px;
+        height: 46px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
       .hero { padding-left: 18px; padding-right: 18px; }
     }
 
@@ -1158,10 +1230,11 @@
     </div>
   </footer>
 
-  <audio id="bgMusic" src="assets/bgm-peiwozhangda.mp3" preload="auto" autoplay loop playsinline></audio>
+  <audio id="bgMusic" src="assets/bgm-peiwozhangda.mp3" preload="auto" autoplay loop playsinline webkit-playsinline></audio>
+
+  <button class="music-toggle music-active" id="musicBtn" type="button" aria-label="暂停背景音乐" title="暂停背景音乐">音乐开</button>
 
   <div class="float-tools" aria-label="快捷操作">
-    <button class="tool-btn music-active" id="musicBtn" type="button" aria-label="暂停背景音乐">♪</button>
     <button class="tool-btn" id="topBtn" type="button" aria-label="返回顶部">↑</button>
   </div>
 
@@ -1262,7 +1335,7 @@
     function updateMusicButton(isPlaying, isWaiting) {
       musicBtn.classList.toggle("music-active", isPlaying);
       musicBtn.classList.toggle("music-waiting", isWaiting);
-      musicBtn.textContent = isPlaying ? "Ⅱ" : "♪";
+      musicBtn.textContent = isPlaying ? "音乐开" : "音乐关";
       musicBtn.setAttribute("aria-label", isPlaying ? "暂停背景音乐" : "播放背景音乐");
       musicBtn.title = isPlaying ? "暂停背景音乐" : "播放背景音乐";
     }
