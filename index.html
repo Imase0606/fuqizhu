@@ -739,6 +739,15 @@
       box-shadow: 0 12px 28px rgba(32, 27, 28, .16);
       font-weight: 1000;
     }
+    .tool-btn.music-active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+    }
+    .tool-btn.music-waiting {
+      color: var(--pink);
+      outline: 2px solid rgba(255, 95, 136, .32);
+      outline-offset: 3px;
+    }
 
     .reveal,
     .reveal.visible {
@@ -816,7 +825,11 @@
         padding: 8px;
         font-size: 11px;
       }
-      .float-tools { display: none; }
+      .float-tools {
+        right: 12px;
+        bottom: 92px;
+      }
+      .float-tools #topBtn { display: none; }
       .hero { padding-left: 18px; padding-right: 18px; }
     }
 
@@ -1145,8 +1158,10 @@
     </div>
   </footer>
 
+  <audio id="bgMusic" src="assets/bgm-peiwozhangda.mp3" preload="auto" autoplay loop playsinline></audio>
+
   <div class="float-tools" aria-label="快捷操作">
-    <button class="tool-btn" id="musicBtn" type="button" aria-label="开启或关闭音效">♪</button>
+    <button class="tool-btn music-active" id="musicBtn" type="button" aria-label="暂停背景音乐">♪</button>
     <button class="tool-btn" id="topBtn" type="button" aria-label="返回顶部">↑</button>
   </div>
 
@@ -1154,6 +1169,7 @@
     const nav = document.getElementById("nav");
     const topBtn = document.getElementById("topBtn");
     const musicBtn = document.getElementById("musicBtn");
+    const bgMusic = document.getElementById("bgMusic");
     const revealItems = document.querySelectorAll(".reveal");
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".stage-panel");
@@ -1162,7 +1178,8 @@
     const wishForm = document.getElementById("wishForm");
     const wishResult = document.getElementById("wishResult");
     let audioContext;
-    let soundOn = false;
+    let soundOn = true;
+    let musicWanted = true;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1170,6 +1187,13 @@
       });
     }, { threshold: 0.16 });
     revealItems.forEach((item) => observer.observe(item));
+
+    bgMusic.volume = 0.46;
+    startMusic();
+    document.addEventListener("WeixinJSBridgeReady", startMusic, false);
+    window.addEventListener("pointerdown", () => {
+      if (musicWanted && bgMusic.paused) startMusic();
+    }, { once: true });
 
     window.addEventListener("scroll", () => {
       nav.classList.toggle("show", window.scrollY > 80);
@@ -1211,10 +1235,37 @@
     });
 
     musicBtn.addEventListener("click", () => {
-      soundOn = !soundOn;
-      musicBtn.textContent = soundOn ? "×" : "♪";
-      if (soundOn) playTone(680, 0.12);
+      if (bgMusic.paused) {
+        musicWanted = true;
+        soundOn = true;
+        startMusic();
+      } else {
+        musicWanted = false;
+        soundOn = false;
+        bgMusic.pause();
+        updateMusicButton(false, false);
+      }
     });
+
+    function startMusic() {
+      musicWanted = true;
+      const playPromise = bgMusic.play();
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise
+          .then(() => updateMusicButton(true, false))
+          .catch(() => updateMusicButton(false, true));
+      } else {
+        updateMusicButton(!bgMusic.paused, false);
+      }
+    }
+
+    function updateMusicButton(isPlaying, isWaiting) {
+      musicBtn.classList.toggle("music-active", isPlaying);
+      musicBtn.classList.toggle("music-waiting", isWaiting);
+      musicBtn.textContent = isPlaying ? "Ⅱ" : "♪";
+      musicBtn.setAttribute("aria-label", isPlaying ? "暂停背景音乐" : "播放背景音乐");
+      musicBtn.title = isPlaying ? "暂停背景音乐" : "播放背景音乐";
+    }
 
     function playTone(frequency, duration) {
       if (!soundOn && duration !== 0.12) return;
