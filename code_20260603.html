@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同岁同行，一起长大 | 泡泡玛特20周年</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pop: {
+                            pink: '#FF6B9D',
+                            blue: '#4ECDC4',
+                            yellow: '#FFE66D',
+                            purple: '#9B5DE5',
+                            dark: '#2D3436'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['PingFang SC', 'Microsoft YaHei', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .parallax {
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+    </style>
+</head>
+<body class="scroll-smooth hide-scrollbar bg-white text-pop-dark overflow-x-hidden">
+    <!-- 加载页 -->
+    <div id="loading" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="w-24 h-24 mb-6 relative">
+            <div class="absolute inset-0 border-4 border-pop-pink rounded-full animate-ping opacity-20"></div>
+            <div class="absolute inset-0 border-4 border-pop-pink rounded-full animate-spin border-t-transparent"></div>
+            <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-pop-pink">POP</div>
+        </div>
+        <p class="text-pop-dark/70 animate-pulse">正在打开你的成长盲盒...</p>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md shadow-sm transition-all duration-300 -translate-y-full">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="font-bold text-pop-pink text-xl">POP MART</div>
+            <div class="flex space-x-6 text-sm">
+                <a href="#section1" class="hover:text-pop-pink transition-colors">初见</a>
+                <a href="#section2" class="hover:text-pop-pink transition-colors">成长</a>
+                <a href="#section3" class="hover:text-pop-pink transition-colors">同行</a>
+                <a href="#wish" class="hover:text-pop-pink transition-colors">心愿</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页 -->
+    <section id="home" class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-pop-pink/10 to-pop-blue/10 z-0"></div>
+        <div class="absolute top-20 left-10 w-20 h-20 bg-pop-yellow/30 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-pop-purple/20 rounded-full blur-xl animate-pulse delay-1000"></div>
+        
+        <div class="container mx-auto px-6 text-center z-10">
+            <p class="text-pop-pink font-medium mb-2 animate-fadeIn">2006 - 2026</p>
+            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-4 text-shadow-lg leading-tight">
+                同岁同行<br>
+                <span class="text-pop-pink">一起长大</span>
+            </h1>
+            <p class="text-lg text-pop-dark/70 mb-10 max-w-md mx-auto">
+                2006年，我们同时来到这个世界<br>
+                2026年，我们一起奔赴未来
+            </p>
+            <a href="#section1" class="inline-block bg-pop-pink text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                开启成长之旅 <i class="fa fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <i class="fa fa-chevron-down text-pop-dark/30"></i>
+        </div>
+    </section>
+
+    <!-- 第一阶段：初见 -->
+    <section id="section1" class="min-h-screen py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-pop-blue/10 text-pop-blue px-4 py-1 rounded-full text-sm font-medium mb-4">第一阶段</span>
+                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">初见 · 见证彼此的成长</h2>
+                    <p class="text-pop-dark/70 max-w-2xl mx-auto">
+                        2006年，泡泡玛特诞生；2016年，Molly与你相遇<br>
+                        每一个开始，都值得被记住
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div class="order-2 md:order-1">
+                        <div class="space-y-6">
+                            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-pop-yellow rounded-full flex items-center justify-center text-white mr-3">
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">2006 诞生启程</h3>
+                                </div>
+                                <p class="text-pop-dark/70">
+                                    怀揣对未来的憧憬，泡泡玛特正式创立。那时的我们，和你一样，对世界充满好奇。
+                                </p>
+                            </div>
+                            
+                            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-pop-pink rounded-full flex items-center justify-center text-white mr-3">
+                                        <i class="fa fa-gift"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">2016 第一次相遇</h3>
+                                </div>
+                                <p class="text-pop-dark/70">
+                                    你拥有了第一只Molly，从此成长路上多了一个伙伴。抽盲盒的快乐，成为青春里的小确幸。
+                                </p>
+                            </div>
+                            
+                            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-pop-blue rounded-full flex items-center justify-center text-white mr-3">
+                                        <i class="fa fa-graduation-cap"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">2019 初入校园</h3>
+                                </div>
+                                <p class="text-pop-dark/70">
+                                    你拖着行李走进大学校门，泡泡玛特也第一次走进校园。我们都对未来，充满了亮晶晶的期待。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 md:order-2 relative">
+                        <div class="aspect-square bg-gradient-to-br from-pop-yellow/20 to-pop-pink/20 rounded-3xl flex items-center justify-center p-8">
+                            <div class="text-center">
+                                <div class="text-8xl mb-4">🎁</div>
+                                <p class="font-medium text-pop-dark/70">第一次拆盲盒的惊喜</p>
+                            </div>
+                        </div>
+                        <div class="absolute -top-5 -right-5 w-20 h-20 bg-pop-pink/10 rounded-full blur-xl"></div>
+                        <div class="absolute -bottom-5 -left-5 w-16 h-16 bg-pop-blue/10 rounded-full blur-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二阶段：成长 -->
+    <section id="section2" class="min-h-screen py-20 bg-gray-50 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-pop-purple/10 text-pop-purple px-4 py-1 rounded-full text-sm font-medium mb-4">第二阶段</span>
+                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">成长 · 不完美的勇气</h2>
+                    <p class="text-pop-dark/70 max-w-2xl mx-auto">
+                        不是每一次设计都能成功，不是每一次考试都能满分<br>
+                        所有的试错，都是成长的勋章
+                    </p>
+                </div>
+                
+                <!-- 成长错题本 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-10">
+                    <div class="bg-pop-yellow/10 p-4 border-b border-gray-100">
+                        <h3 class="font-bold text-lg flex items-center">
+                            <i class="fa fa-book mr-2 text-pop-yellow"></i>
+                            泡泡玛特成长错题本
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-6">
+                            <div class="border-l-4 border-pop-pink pl-4 py-2">
+                                <h4 class="font-bold mb-1">错题1：盲目扩张，门店亏损</h4>
+                                <p class="text-pop-dark/70 text-sm mb-2">
+                                    2010-2015年，模仿"屈臣氏"做综合潮品零售，品类杂、利润薄，大量门店持续亏损。
+                                </p>
+                                <p class="text-pop-pink text-sm font-medium">
+                                    ✅ 改正：2016年签约Molly，推出盲盒，从渠道商转向自有IP运营
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-pop-blue pl-4 py-2">
+                                <h4 class="font-bold mb-1">错题2：依赖代理，被卡脖子</h4>
+                                <p class="text-pop-dark/70 text-sm mb-2">
+                                    2014-2016年，靠代理Sonny Angel爆火，但无版权，扩店受限，最终丢失代理权。
+                                </p>
+                                <p class="text-pop-blue text-sm font-medium">
+                                    ✅ 改正：大力孵化自有IP，打造Molly、Dimoo、SKULLPANDA等头部IP矩阵
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-pop-purple pl-4 py-2">
+                                <h4 class="font-bold mb-1">错题3：品控瑕疵，用户不满</h4>
+                                <p class="text-pop-dark/70 text-sm mb-2">
+                                    早期常收到用户关于品控瑕疵、售后烦琐、热门款缺货的反馈。
+                                </p>
+                                <p class="text-pop-purple text-sm font-medium">
+                                    ✅ 改正：持续优化品控流程，简化退换货条件，实施限购+实名+分阶段补货
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 text-center">
+                            <p class="text-pop-dark/70 italic">
+                                "这题错了，但是我们的方向对了。<br>
+                                走弯路不可怕，可怕的是不敢出发。"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户错题征集 -->
+                <div class="text-center">
+                    <p class="mb-4 text-pop-dark/70">你有什么成长错题？写下来，和泡泡玛特一起改正</p>
+                    <button id="addMistake" class="bg-pop-purple text-white px-6 py-2 rounded-full font-medium shadow hover:shadow-lg transition-shadow">
+                        写下我的成长错题
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三阶段：同行 -->
+    <section id="section3" class="min-h-screen py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-pop-pink/10 text-pop-pink px-4 py-1 rounded-full text-sm font-medium mb-4">第三阶段</span>
+                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">同行 · 坦然向阳而生</h2>
+                    <p class="text-pop-dark/70 max-w-2xl mx-auto">
+                        你在为梦想熬夜，泡泡玛特陪你一起<br>
+                        别怕前路未知，我们并肩作战
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:-translate-y-2 transition-transform">
+                        <div class="w-16 h-16 bg-pop-pink/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-book text-2xl text-pop-pink"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">考研路上</h3>
+                        <p class="text-pop-dark/70 text-sm">
+                            深夜的自习室，桌上的咖啡，还有陪伴你的Molly。考研加油，你不是一个人在战斗。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:-translate-y-2 transition-transform">
+                        <div class="w-16 h-16 bg-pop-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-briefcase text-2xl text-pop-blue"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">求职路上</h3>
+                        <p class="text-pop-dark/70 text-sm">
+                            一次次的面试，一次次的修改简历。别怕，泡泡玛特为你打气，好工作就在前方。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:-translate-y-2 transition-transform">
+                        <div class="w-16 h-16 bg-pop-yellow/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-heart text-2xl text-pop-yellow"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">热爱路上</h3>
+                        <p class="text-pop-dark/70 text-sm">
+                            别人都在卷速度，我们一起卷热爱。保持初心，做自己喜欢的事，就是最酷的人生。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-pop-pink/10 to-pop-blue/10 rounded-2xl p-8 text-center">
+                    <h3 class="text-2xl font-bold mb-4">20岁的泡泡玛特，20岁的你</h3>
+                    <p class="text-pop-dark/70 mb-6">
+                        我们一起经历了憧憬、迷茫和压力<br>
+                        未来，我们继续一起长大
+                    </p>
+                    <a href="#wish" class="inline-block bg-pop-pink text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        许下成长心愿 <i class="fa fa-star ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 心愿盲盒 -->
+    <section id="wish" class="min-h-screen py-20 bg-gray-50 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="inline-block bg-pop-yellow/10 text-pop-yellow px-4 py-1 rounded-full text-sm font-medium mb-4">成长心愿</span>
+                    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">你的心愿盲盒</h2>
+                    <p class="text-pop-dark/70">
+                        写下你的20岁心愿，放进泡泡玛特心愿盲盒<br>
+                        十年后，我们一起打开它
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <form id="wishForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="name">你的名字</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pop-pink/50" placeholder="请输入你的名字" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="wish">你的20岁心愿</label>
+                            <textarea id="wish" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pop-pink/50" placeholder="写下你对未来的期待..." required></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">选择你的守护IP</label>
+                            <div class="grid grid-cols-3 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="ip" value="molly" class="sr-only peer" checked>
+                                    <div class="border-2 border-gray-200 rounded-lg p-4 text-center peer-checked:border-pop-pink peer-checked:bg-pop-pink/5 transition-all">
+                                        <div class="text-3xl mb-1">👧</div>
+                                        <p class="text-sm">Molly</p>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="ip" value="dimoo" class="sr-only peer">
+                                    <div class="border-2 border-gray-200 rounded-lg p-4 text-center peer-checked:border-pop-blue peer-checked:bg-pop-blue/5 transition-all">
+                                        <div class="text-3xl mb-1">👦</div>
+                                        <p class="text-sm">Dimoo</p>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="ip" value="skullpanda" class="sr-only peer">
+                                    <div class="border-2 border-gray-200 rounded-lg p-4 text-center peer-checked:border-pop-purple peer-checked:bg-pop-purple/5 transition-all">
+                                        <div class="text-3xl mb-1">💀</div>
+                                        <p class="text-sm">SKULLPANDA</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-pop-pink text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            生成我的心愿盲盒
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- 心愿结果（默认隐藏） -->
+                <div id="wishResult" class="hidden mt-8 bg-white rounded-2xl shadow-lg p-8 text-center">
+                    <div class="w-24 h-24 bg-pop-yellow/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-gift text-4xl text-pop-yellow"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">你的心愿已存入盲盒</h3>
+                    <p id="wishText" class="text-pop-dark/70 mb-6"></p>
+                    <p class="text-sm text-pop-dark/50 mb-6">
+                        心愿编号：<span id="wishId"></span><br>
+                        封存时间：2026年6月3日
+                    </p>
+                    <button id="shareWish" class="bg-pop-blue text-white px-6 py-2 rounded-full font-medium shadow hover:shadow-lg transition-shadow">
+                        分享我的心愿 <i class="fa fa-share-alt ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-pop-dark text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="font-bold text-2xl mb-4">POP MART</div>
+            <p class="text-white/70 mb-6">
+                同岁同行，一起长大<br>
+                泡泡玛特20周年
+            </p>
+            <p class="text-white/50 text-sm">
+                NCDA全国大学生数字艺术设计大赛 | 1-C2 HTML5设计
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 加载页动画
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('opacity-0');
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 1000);
+            }, 1500);
+        });
+
+        // 导航栏滚动显示
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.remove('-translate-y-full');
+            } else {
+                navbar.classList.add('-translate-y-full');
+            }
+        });
+
+        // 成长错题按钮
+        document.getElementById('addMistake').addEventListener('click', () => {
+            const mistake = prompt('请写下你的成长错题：');
+            if (mistake && mistake.trim() !== '') {
+                alert('你的成长错题已记录！和泡泡玛特一起，在错误中成长吧～');
+            }
+        });
+
+        // 心愿盲盒表单提交
+        document.getElementById('wishForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const wish = document.getElementById('wish').value;
+            const wishId = Math.random().toString(36).substring(2, 10).toUpperCase();
+            
+            document.getElementById('wishText').textContent = `"${wish}" —— ${name}`;
+            document.getElementById('wishId').textContent = wishId;
+            
+            document.getElementById('wishForm').classList.add('hidden');
+            document.getElementById('wishResult').classList.remove('hidden');
+        });
+
+        // 分享按钮
+        document.getElementById('shareWish').addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: '我的泡泡玛特心愿盲盒',
+                    text: document.getElementById('wishText').textContent,
+                    url: window.location.href
+                });
+            } else {
+                alert('心愿已复制到剪贴板，快去分享给你的朋友吧！');
+                navigator.clipboard.writeText(document.getElementById('wishText').textContent + '\n' + window.location.href);
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
