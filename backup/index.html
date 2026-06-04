@@ -6,54 +6,6 @@
   <meta name="theme-color" content="#fff7f3" />
   <title>同岁同行，一起长大 | 泡泡玛特20周年H5</title>
   <style>
-    /* 导航容器：均分排布，电脑手机自适应 */
-.nav-links {
-  display: flex;
-  width: 100%;
-  gap: 5px; /* 色块分隔空隙，实现色块隔开效果 */
-}
-
-/* 基础样式：统一圆角、粗字、暖边框，文字永远可见 */
-.menu-item {
-  flex: 1; /* 四个导航自动平分宽度，手机电脑均分 */
-  padding: 10px 4px;
-  text-align: center;
-  font-size: 17px;
-  font-weight: 900; /* 加粗醒目 */
-  border: 2px solid #ff9999; /* 暖粉色边框（和示例按钮同色系） */
-  border-radius: 12px;
-}
-
-/* 四个分别设置不同暖色色块底色，实现色块区分 */
-.menu-item:nth-child(1) {
-  background: linear-gradient(to right,#ff7096,#ff9a8b); /* 粉橙渐变-洞察 */
-  color: #ffffff;
-}
-.menu-item:nth-child(2) {
-  background: linear-gradient(to right,#ff968a,#ffc38c); /* 橘粉渐变-三阶段 */
-  color: #ffffff;
-}
-.menu-item:nth-child(3) {
-  background: linear-gradient(to right,#ffb099,#ffdd99); /* 浅橘黄渐变-错题本 */
-  color: #662c2c;
-}
-.menu-item:nth-child(4) {
-  background: linear-gradient(to right,#ffd2a8,#ffe5c9); /* 奶暖黄渐变-心愿 */
-  color: #773322;
-}
-
-/* 悬浮加深效果 */
-.menu-item:hover {
-  filter: brightness(1.08);
-}
-
-/* 手机端缩小适配 */
-@media(max-width:550px){
-  .menu-item{
-    font-size:14px;
-    padding:8px 2px;
-  }
-}
     :root {
       --ink: #201b1c;
       --muted: #6f6669;
@@ -981,10 +933,10 @@
       <span>同岁同行</span>
     </a>
     <div class="nav-links" aria-label="页面导航">
-      <a href="#insight" class="menu-item">洞察</a>
-      <a href="#stages" class="menu-item">三阶段</a>
-      <a href="#mistake" class="menu-item">错题本</a>
-      <a href="#wish" class="menu-item">心愿</a>
+      <a href="#insight">洞察</a>
+      <a href="#stages">三阶段</a>
+      <a href="#mistake">错题本</a>
+      <a href="#wish">心愿</a>
     </div>
   </nav>
 
@@ -1013,7 +965,7 @@
             <p class="kicker">01 MARKET & BRAND INSIGHT</p>
             <h2>潮玩不只是玩具，是和我们同龄的成长伙伴。</h2>
           </div>
-          <p class="lead">作品的核心，旨在将泡泡玛特从“收藏级潮玩”转译为“同龄同行者”：同样憧憬、同样试错、同样在压力中守住热爱。</p>
+          <p class="lead">策划案的核心突破，是把泡泡玛特从“收藏级潮玩”转译为“同龄同行者”：同样憧憬、同样试错、同样在压力中守住热爱。</p>
         </div>
         <div class="insight-grid">
           <article class="insight reveal">
@@ -1434,7 +1386,7 @@
         <div class="section-head reveal">
           <div>
             <p class="kicker">04 MEDIA & CAMPUS PLAN</p>
-            <h2>三周传播，线上话题和校园打卡闭环。</h2>
+            <h2>3周传播节奏，把线上话题和校园打卡闭环。</h2>
           </div>
         </div>
         <div class="media-grid">
@@ -1513,6 +1465,24 @@
             <button class="btn btn-primary" type="submit" style="width:100%; margin-top:18px;">封存心愿</button>
             <div class="wish-result" id="wishResult"></div>
           </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="result">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">05 EFFECT ESTIMATION</p>
+            <h2>低成本校园渗透，形成可追踪传播闭环。</h2>
+          </div>
+          <p class="lead">预算控制在 14000 元，目标覆盖校园、引导 UGC、沉淀私域粉丝，并联动线下门店转化。</p>
+        </div>
+        <div class="metrics">
+          <div class="metric reveal"><b>50万</b><span>全网话题曝光量</span></div>
+          <div class="metric reveal"><b>20万</b><span>话题互动量</span></div>
+          <div class="metric reveal"><b>5000+</b><span>用户UGC内容</span></div>
+          <div class="metric reveal"><b>1.79元</b><span>预估单次互动成本</span></div>
         </div>
       </div>
     </section>
@@ -1726,114 +1696,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
   </script>
-  <section class="section rocket-box-area" style="background:#171418;padding:80px 20px;overflow:hidden;">
-  <div class="section-inner" style="text-align:center;">
-    <h2 style="color:#fff;margin-bottom:50px;font-size:26px;">心愿火箭 · 寄语升空</h2>
-    <!-- 火箭盲盒容器 -->
-    <div id="rocketWrap" style="position:relative;height:320px;display:flex;align-items:center;justify-content:center;">
-      <div id="rocketBox" style="width:90px;height:110px;cursor:pointer;position:relative;transition:all 0.3s;">
-        <!-- 火箭本体 -->
-        <div style="width:100%;height:82%;background:linear-gradient(135deg,#ff7856,#ffbc34);border-radius:45px 45px 12px 12px;position:relative;">
-          <div style="width:32px;height:32px;background:#fff;border-radius:50%;position:absolute;top:18px;left:calc(50% - 16px);"></div>
-        </div>
-        <!-- 喷射口 -->
-        <div id="fireBase" style="width:36px;height:22px;background:linear-gradient(#ff2c2c,#ffdd00);border-radius:0 0 18px 18px;margin:0 auto;opacity:0;"></div>
-      </div>
-    </div>
-  </div>
-
-  <style>
-    /* 飘出彩色鸡汤文字 */
-    .soup-item{
-      position:absolute;
-      font-size:15px;
-      font-weight:500;
-      white-space:nowrap;
-      animation:textFloat 4.2s ease-out forwards;
-    }
-    @keyframes textFloat{
-      0%{opacity:1;transform:translateY(0) rotate(0deg);}
-      100%{opacity:0;transform:translateY(-320px) rotate(18deg);}
-    }
-    /* 火箭升空动画 */
-    @keyframes flyRocket{
-      0%{transform:translateY(0);}
-      100%{transform:translateY(-420px);opacity:0;}
-    }
-    .rocket-fly{
-      animation:flyRocket 3.2s ease-out forwards;
-    }
-    /* 喷火闪烁 */
-    @keyframes fireBlink{
-      0%,100%{opacity:0.8;height:22px;}
-      50%{opacity:1;height:30px;}
-    }
-    .fire-active{
-      animation:fireBlink 0.18s infinite;
-    }
-  </style>
-
-  <script>
-    // 多色数组
-    const colorArr = ['#ff5964','#ffd233','#39e2ff','#8cff80','#d98cff','#ffaa77','#ffffff'];
-    // 鸡汤文案库
-    const soupList = [
-      "万事顺意，前路坦荡",
-      "所有努力终有回响",
-      "慢慢变好，自在从容",
-      "岁岁无忧，平安喜乐",
-      "奔赴热爱，永不彷徨",
-      "生活明朗，万物可爱",
-      "保持初心，静待花开",
-      "风雨过后皆是晴空",
-      "未来闪闪发光",
-      "不慌不忙，来日方长",
-      "心之所向，素履以往",
-      "好运正在奔赴你",
-      "不负时光不负己",
-      "平凡日子也有星光",
-      "所求皆如愿所行化坦途"
-    ];
-    const rocketBox = document.getElementById('rocketBox');
-    const fireBase = document.getElementById('fireBase');
-    const wrapDom = document.getElementById('rocketWrap');
-    let isLaunch = false;
-
-    rocketBox.onclick = function(){
-      if(isLaunch) return;
-      isLaunch = true;
-      // 开启火焰
-      fireBase.classList.add('fire-active');
-      // 批量生成彩色文字
-      for(let i=0;i<32;i++){
-        setTimeout(()=>{
-          const span = document.createElement('span');
-          span.className = 'soup-item';
-          let ranText = soupList[Math.floor(Math.random()*soupList.length)];
-          let ranColor = colorArr[Math.floor(Math.random()*colorArr.length)];
-          span.style.color = ranColor;
-          // 横向随机偏移
-          let leftRan = -70 + Math.random()*140;
-          span.style.left = `calc(50% + ${leftRan}px)`;
-          span.style.bottom = '20px';
-          span.innerText = ranText;
-          wrapDom.appendChild(span);
-          // 文字自动销毁
-          setTimeout(()=>span.remove(),4200);
-        },i*45)
-      }
-      // 延迟火箭起飞
-      setTimeout(()=>{
-        rocketBox.classList.add('rocket-fly');
-      },700)
-      // 全部结束重置
-      setTimeout(()=>{
-        fireBase.classList.remove('fire-active');
-        rocketBox.classList.remove('rocket-fly');
-        isLaunch = false;
-      },3800)
-    }
-  </script>
-</section>
 </body>
 </html>
