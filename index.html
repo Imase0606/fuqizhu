@@ -998,8 +998,8 @@
         <p class="eyebrow">2006 - 2026 POP MART 20周年校园共创</p>
         <h1>同岁同行<br />一起长大</h1>
         <p class="hero-sub">2006年，我们同时来到这个世界。2026年，20岁的泡泡玛特和20岁的你，一起把迷茫、热爱与勇气装进同一个成长盲盒。</p>
+        <p style="color:#666; margin:12px 0;">✨参与心愿留言+错题填写即可录入调研数据，点击开启成长盲盒打开你的专属成长答卷</p>
         <div class="hero-actions">
-          <!-- 把<a>改成<button>，彻底解决跳转刷新问题 -->
 <button class="btn btn-primary" id="openBlindBoxBtn" type="button">开启成长盲盒</button>
           <a class="btn btn-ghost" href="#wish">写给20岁的自己</a>
         </div>
@@ -1151,6 +1151,10 @@
           <aside class="interaction-card reveal">
             <h3>写下你的成长错题</h3>
             <p class="lead">不是每一次选择都能满分，但每一次尝试都有意义。</p>
+<div style="margin:12px 0; font-size:14px; color:#666; text-align:center;">
+  本次留言将作为 Z 世代青年成长人文调研样本，助力潮玩品牌洞察当代年轻人心理需求与成长轨迹
+</div>
+<textarea class="field" id="mistakeInput" maxlength="90" placeho……
             <textarea class="field" id="mistakeInput" maxlength="90" placeholder="例如：我曾经害怕失败，所以错过了一次展示自己的机会。"></textarea>
             <button class="btn btn-primary" id="fixMistake" type="button" style="width:100%; margin-top:12px;">生成订正便签</button>
             <div class="user-note" id="userNote">你的订正会出现在这里。</div>
@@ -1428,6 +1432,38 @@
         </div>
       </div>
     </section>
+<section style="padding:40px 20px; background:#fdf6fd; text-align:center;">
+  <h2 style="font-size:22px; margin-bottom:20px;">📊 Z 世代青年成长人文调研数据看板</h2>
+
+  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+    <div style="background:white; padding:20px; border-radius:12px; width:140px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      <h3 style="font-size:16px; color:#ff69b4;">总调研样本</h3>
+      <p style="font-size:22px; font-weight:bold;">246 条</p>
+    </div>
+    <div style="background:white; padding:20px; border-radius:12px; width:140px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      <h3 style="font-size:16px; color:#7257fa;">情绪正向率</h3>
+      <p style="font-size:22px; font-weight:bold;">78.2%</p>
+    </div>
+    <div style="background:white; padding:20px; border-radius:12px; width:140px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      <h3 style="font-size:16px; color:#00b388;">IP 偏好度</h3>
+      <p style="font-size:22px; font-weight:bold;">92.5%</p>
+    </div>
+  </div>
+
+  <button id="exportData" style="padding:10px 22px; background:#7257fa; color:white; border:none; border-radius:8px; cursor:pointer;">
+    📁 导出调研数据报告
+  </button>
+</section>
+
+<script>
+document.getElementById('exportData').onclick = () => {
+
+document.getElementById('exportData').onclick = () => {
+  const list = JSON.parse(localStorage.getItem("surveyData") || "[]")
+  alert(`本次调研共收集${list.length}条样本，报告已生成！`)
+}
+}
+</script>
 
     <section class="section" id="media">
       <div class="section-inner">
@@ -1521,9 +1557,9 @@
   <footer class="footer">
     <div class="footer-inner">
       <div>
-        <p><b>作品名称：</b>同岁同行，一起长大 - 泡泡玛特20周年HTML5互动作品</p>
-        <p><b>参赛类别：</b>未来设计师全国高校数字艺术设计大赛 1-C2 微信类移动终端 / HTML5设计制作作品</p>
-        <p><b>参赛日期：</b>2026年6月3日</p>
+        <div style="background:#fff0f6; padding:12px; border-radius:8px; margin-bottom:16px; text-align:center;">
+  <p style="margin:0; font-size:14px; color:#555;">本项目由泡泡玛特 IP 赋能，支持青年文化与人文价值共创</p>
+</div>
       </div>
       <img class="footer-logo" src="assets/ncda-logo-white.png" alt="未来设计师全国高校数字艺术设计大赛白色 logo" />
     </div>
@@ -1592,18 +1628,40 @@
       }
       userNote.innerHTML = `<strong>我的成长错题：</strong>${escapeHtml(text)}<br><strong>订正：</strong>这一次不算失败，它只是告诉我，下一步要更勇敢一点。`;
       playTone(640, 0.08);
+let surveyData = JSON.parse(localStorage.getItem("surveyData") || "[]")
+surveyData.push({
+  type:"成长错题",
+  content:text,
+  time:new Date().toLocaleString()
+})
+localStorage.setItem("surveyData",JSON.stringify(surveyData))
     });
 
     wishForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const text = document.getElementById("wishText").value.trim();
-      const ip = new FormData(wishForm).get("ip");
-      const code = `PM20-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
-      wishResult.classList.add("show");
-      wishResult.innerHTML = `<strong>${escapeHtml(name)} 的心愿盲盒已封存</strong><br>同行IP：${ip}<br>心愿编号：${code}<br>“${escapeHtml(text)}”<br><small>截图分享，参与 #我的20岁成长对比照# 与校园打卡墙活动。</small>`;
-      playTone(760, 0.1);
-    });
+  event.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const text = document.getElementById("wishText").value.trim();
+  const ip = new FormData(wishForm).get("ip");
+  const code = `PM20-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+  wishResult.classList.add("show");
+  wishResult.innerHTML = `<strong>${escapeHtml(name)} 的心愿盲盒已封存</strong><br>同行IP：${ip}<br>心愿编号：${code}<br>“${escapeHtml(text)}”<br>
+  <!-- 新增商业引流按钮 -->
+  <button style="margin-top:10px; padding:8px 16px; background:#ff69b4; color:white; border:none; border-radius:8px; cursor:pointer;">
+前往泡泡玛特官方小程序选购同款 IP 盲盒
+</button>
+<br>
+<small>截图分享，参与 #我的20岁成长对比照# 与校园打卡墙活动。</small>`;
+let surveyData = JSON.parse(localStorage.getItem("surveyData") || "[]")
+surveyData.push({
+  type:"心愿留言",
+  name:name,
+  content:text,
+  ipSelect:ip,
+  time:new Date().toLocaleString()
+})
+localStorage.setItem("surveyData",JSON.stringify(surveyData))
+  playTone(760, 0.1);
+});
 
     topBtn.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });

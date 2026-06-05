@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fff7f3" />
+  <title>同岁同行，一起长大 | 泡泡玛特20周年H5</title>
+  <style>
+    /* 导航容器：均分排布，电脑手机自适应 */
+.nav-links {
+  display: flex;
+  width: 100%;
+  gap: 5px; /* 色块分隔空隙，实现色块隔开效果 */
+}
+
+/* 基础样式：统一圆角、粗字、暖边框，文字永远可见 */
+.menu-item {
+  flex: 1; /* 四个导航自动平分宽度，手机电脑均分 */
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 900; /* 加粗醒目 */
+  border: 2px solid #ff9999; /* 暖粉色边框（和示例按钮同色系） */
+  border-radius: 12px;
+}
+
+/* 四个分别设置不同暖色色块底色，实现色块区分 */
+.menu-item:nth-child(1) {
+  background: linear-gradient(to right,#ff7096,#ff9a8b); /* 粉橙渐变-洞察 */
+  color: #ffffff;
+}
+.menu-item:nth-child(2) {
+  background: linear-gradient(to right,#ff968a,#ffc38c); /* 橘粉渐变-三阶段 */
+  color: #ffffff;
+}
+.menu-item:nth-child(3) {
+  background: linear-gradient(to right,#ffb099,#ffdd99); /* 浅橘黄渐变-错题本 */
+  color: #662c2c;
+}
+.menu-item:nth-child(4) {
+  background: linear-gradient(to right,#ffd2a8,#ffe5c9); /* 奶暖黄渐变-心愿 */
+  color: #773322;
+}
+
+/* 悬浮加深效果 */
+.menu-item:hover {
+  filter: brightness(1.08);
+}
+
+/* 手机端缩小适配 */
+@media(max-width:550px){
+  .menu-item{
+    font-size:14px;
+    padding:8px 2px;
+  }
+}
+    :root {
+      --ink: #201b1c;
+      --muted: #6f6669;
+      --paper: #fffaf6;
+      --pink: #ff5f88;
+      --coral: #ff8a68;
+      --mint: #57c7b6;
+      --yellow: #ffd95a;
+      --blue: #6b9cff;
+      --violet: #8e6cff;
+      --line: rgba(32, 27, 28, .12);
+      --shadow: 0 20px 50px rgba(77, 44, 35, .16);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+    html {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      overscroll-behavior-x: none;
+      scroll-behavior: smooth;
+    }
+    body {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      overflow-x: clip;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
+    }
+    body.locked { overflow: hidden; }
+    img { max-width: 100%; display: block; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .app {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 247, 243, .96) 92%),
+        radial-gradient(circle at 8% 20%, rgba(255, 217, 90, .24), transparent 28rem),
+        radial-gradient(circle at 100% 6%, rgba(87, 199, 182, .18), transparent 24rem);
+    }
+    .hero,
+    .section,
+    .footer,
+    .nav {
+      width: 100vw;
+      max-width: 100%;
+      overflow-x: clip;
+    }
+    h1, h2, h3, p, a, span, b, strong, small, label, button {
+      overflow-wrap: anywhere;
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 30;
+      left: 0;
+      right: auto;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px clamp(16px, 5vw, 56px);
+      background: rgba(255, 250, 246, .78);
+      border-bottom: 1px solid rgba(32, 27, 28, .08);
+      backdrop-filter: blur(18px);
+      transform: translateY(-100%);
+      transition: transform .5s ease;
+    }
+    .nav.show { transform: translateY(0); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+    .brand-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: conic-gradient(from 140deg, var(--pink), var(--yellow), var(--mint), var(--pink));
+      box-shadow: 0 8px 18px rgba(255, 95, 136, .25);
+    }
+    .nav-links {
+      max-width: calc(100vw - 24px);
+      display: flex;
+      gap: 8px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .62);
+    }
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .nav-links a.active,
+    .nav-links a:hover {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 84px clamp(18px, 5vw, 64px) 36px;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.04);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(32, 27, 28, .12) 0%, rgba(32, 27, 28, .14) 42%, rgba(255, 250, 246, .96) 92%),
+        linear-gradient(90deg, rgba(255, 250, 246, .74), rgba(255, 250, 246, .18) 58%, rgba(255, 250, 246, .58));
+    }
+    .hero-copy {
+      width: min(760px, 100%);
+      padding-bottom: min(7vh, 56px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(255, 255, 255, .72);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #7d4d35;
+      backdrop-filter: blur(14px);
+    }
+    h1 {
+      margin: 0;
+      max-width: 720px;
+      font-size: clamp(42px, 9vw, 96px);
+      line-height: .96;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+    .hero-sub {
+      max-width: 580px;
+      margin: 18px 0 0;
+      color: #4b4144;
+      font-size: clamp(16px, 2.4vw, 22px);
+      line-height: 1.7;
+      font-weight: 600;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-weight: 900;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:active { transform: translateY(1px) scale(.99); }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+      box-shadow: 0 14px 32px rgba(255, 95, 136, .32);
+    }
+    .btn-ghost {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .72);
+      border-color: rgba(32, 27, 28, .1);
+      backdrop-filter: blur(12px);
+    }
+    .competition-badge {
+      position: absolute;
+      top: 18px;
+      right: clamp(18px, 5vw, 56px);
+      z-index: 2;
+      width: min(150px, 30vw);
+      padding: 10px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(255, 255, 255, .8);
+      border-radius: var(--radius);
+      backdrop-filter: blur(12px);
+    }
+
+    .section {
+      padding: clamp(64px, 10vw, 118px) clamp(18px, 5vw, 64px);
+      position: relative;
+    }
+    .section-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .7fr) minmax(280px, .3fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--pink);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .insight {
+      min-height: 178px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .74);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(77, 44, 35, .06);
+    }
+    .insight strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+    .insight p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 36px;
+      padding: 14px 0;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: calc(50% - 1px);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(var(--pink), var(--yellow), var(--mint));
+    }
+    .moment {
+      display: grid;
+      grid-template-columns: 1fr 72px 1fr;
+      align-items: center;
+      gap: 18px;
+      margin: 24px 0;
+    }
+    .moment:nth-child(even) .moment-card { grid-column: 3; }
+    .moment:nth-child(even) .year { grid-column: 2; grid-row: 1; }
+    .moment-card {
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .moment-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .moment-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .year {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 1000;
+      box-shadow: 0 12px 28px rgba(32, 27, 28, .2);
+      z-index: 2;
+    }
+
+    .story-stage {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .stage-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .stage-tabs {
+      position: sticky;
+      top: 78px;
+      display: grid;
+      gap: 10px;
+    }
+    .tab {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: left;
+      font-weight: 900;
+    }
+    .tab.active {
+      color: var(--ink);
+      border-color: rgba(255, 95, 136, .42);
+      background: linear-gradient(135deg, rgba(255, 95, 136, .14), rgba(255, 217, 90, .16));
+    }
+    .stage-panel {
+      display: none;
+      min-height: 520px;
+      padding: clamp(22px, 4vw, 44px);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255, 250, 246, .92), rgba(255, 255, 255, .98)),
+        radial-gradient(circle at 88% 12%, rgba(87, 199, 182, .2), transparent 18rem);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+    }
+    .stage-panel.active { display: block; }
+    .poster-label {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 95, 136, .12);
+      color: var(--pink);
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .stage-panel h3 {
+      margin: 16px 0 10px;
+      font-size: clamp(28px, 5vw, 54px);
+      line-height: 1.08;
+    }
+    .quote {
+      margin: 0 0 22px;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    .mini-posters {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .mini-poster {
+      min-height: 174px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .mini-poster::after {
+      content: "";
+      position: absolute;
+      width: 96px;
+      height: 96px;
+      right: -24px;
+      bottom: -24px;
+      background: var(--accent, var(--pink));
+      border-radius: 50%;
+      opacity: .16;
+    }
+    .mini-poster b {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 19px;
+    }
+    .mini-poster span {
+      color: var(--muted);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .notebook {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .wrong-book {
+      padding: 24px;
+      border: 1px solid rgba(32, 27, 28, .16);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(#fff 31px, rgba(107, 156, 255, .16) 32px),
+        linear-gradient(90deg, rgba(255, 95, 136, .36) 64px, transparent 66px);
+      background-size: 100% 32px, 100% 100%;
+      box-shadow: var(--shadow);
+    }
+    .mistake {
+      padding-left: 58px;
+      margin: 0 0 28px;
+    }
+    .mistake h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    .mistake p {
+      margin: 0 0 9px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .correction {
+      display: inline;
+      color: #126f63;
+      font-weight: 900;
+      background: rgba(87, 199, 182, .14);
+      box-shadow: inset 0 -8px rgba(87, 199, 182, .18);
+    }
+    .interaction-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .field {
+      width: 100%;
+      min-height: 112px;
+      resize: vertical;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fffaf6;
+      outline: none;
+      line-height: 1.7;
+    }
+    .field:focus {
+      border-color: rgba(255, 95, 136, .56);
+      box-shadow: 0 0 0 4px rgba(255, 95, 136, .12);
+    }
+    .user-note {
+      margin-top: 16px;
+      padding: 14px;
+      min-height: 70px;
+      background: rgba(255, 217, 90, .18);
+      border: 1px dashed rgba(32, 27, 28, .2);
+      border-radius: var(--radius);
+      color: #5e4a18;
+      line-height: 1.7;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .media-card {
+      min-height: 238px;
+      padding: 20px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 26px rgba(77, 44, 35, .08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .week {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--accent, var(--pink));
+      font-weight: 1000;
+    }
+    .media-card h3 { margin: 16px 0 8px; font-size: 22px; }
+    .media-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .channels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      background: rgba(32, 27, 28, .06);
+      border-radius: 999px;
+      color: #51474a;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .wish-zone {
+      background:
+        linear-gradient(135deg, rgba(32, 27, 28, .94), rgba(77, 43, 69, .9)),
+        radial-gradient(circle at 20% 30%, rgba(255, 95, 136, .36), transparent 20rem);
+      color: #fff;
+    }
+    .wish-zone .lead,
+    .wish-zone .kicker { color: rgba(255, 255, 255, .72); }
+    .wish-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, .55fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .blind-box {
+      min-height: 520px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .04)),
+        radial-gradient(circle at 72% 18%, rgba(255, 217, 90, .28), transparent 14rem);
+      padding: clamp(22px, 4vw, 36px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .24);
+    }
+    .box-visual {
+      width: min(340px, 80%);
+      aspect-ratio: 1;
+      margin: 22px auto;
+      display: grid;
+      place-items: center;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: floatBox 4s ease-in-out infinite;
+    }
+    @keyframes floatBox {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+    .box-face {
+      width: 86%;
+      height: 86%;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, #fff, #ffe9ed 42%, #c9f4ed),
+        repeating-linear-gradient(45deg, rgba(255, 95, 136, .16) 0 8px, transparent 8px 18px);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .32);
+      border: 8px solid rgba(255, 255, 255, .8);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-weight: 1000;
+      text-align: center;
+      line-height: 1.2;
+      font-size: clamp(28px, 6vw, 46px);
+    }
+    .box-face small {
+      display: block;
+      margin-top: 8px;
+      color: var(--pink);
+      font-size: 14px;
+      letter-spacing: .12em;
+    }
+    .wish-form {
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .1);
+      backdrop-filter: blur(16px);
+    }
+    .wish-form label {
+      display: block;
+      margin: 16px 0 8px;
+      color: rgba(255, 255, 255, .82);
+      font-weight: 900;
+    }
+    .wish-form input,
+    .wish-form textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: var(--radius);
+      color: #fff;
+      background: rgba(0, 0, 0, .18);
+      padding: 13px 14px;
+      outline: none;
+    }
+    .wish-form textarea { min-height: 130px; resize: vertical; line-height: 1.7; }
+    .ip-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .ip-options input { position: absolute; opacity: 0; pointer-events: none; }
+    .ip-card {
+      min-height: 148px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 8px;
+      padding: 10px 10px 12px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: var(--radius);
+      color: rgba(255, 255, 255, .7);
+      text-align: center;
+      font-weight: 900;
+      font-size: 13px;
+      background: rgba(255, 255, 255, .06);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .ip-card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .12);
+    }
+    .ip-card span {
+      display: block;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .ip-options input:checked + .ip-card {
+      color: #201b1c;
+      background: #fff;
+      border-color: #fff;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, .18);
+      transform: translateY(-2px);
+    }
+    .wish-result {
+      display: none;
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .92);
+      color: var(--ink);
+      line-height: 1.8;
+    }
+    .wish-result.show { display: block; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .metric {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+      text-align: center;
+    }
+    .metric b {
+      display: block;
+      font-size: clamp(28px, 4vw, 46px);
+      color: var(--pink);
+      line-height: 1;
+    }
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .footer {
+      padding: 34px clamp(18px, 5vw, 64px);
+      color: rgba(255, 255, 255, .72);
+      background: #171314;
+    }
+    .footer-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+    }
+    .footer-logo { width: 150px; opacity: .92; }
+    .footer b { color: #fff; }
+
+    .float-tools {
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 90;
+      display: grid;
+      gap: 10px;
+    }
+    .tool-btn {
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(32, 27, 28, .16);
+      font-weight: 1000;
+    }
+    .tool-btn.music-active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+    }
+    .tool-btn.music-waiting {
+      color: var(--pink);
+      outline: 2px solid rgba(255, 95, 136, .32);
+      outline-offset: 3px;
+    }
+    .music-toggle {
+      position: fixed;
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 100;
+      width: auto;
+      min-width: 92px;
+      height: 52px;
+      border: 0;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 16px;
+      color: var(--pink);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 14px 34px rgba(32, 27, 28, .22);
+      font-size: 15px;
+      font-weight: 1000;
+      backdrop-filter: blur(14px);
+    }
+    .music-toggle.music-active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+    }
+    .music-toggle.music-waiting {
+      outline: 3px solid rgba(255, 95, 136, .24);
+      outline-offset: 3px;
+    }
+
+    .reveal,
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .rotate-tip {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      place-items: center;
+      padding: 24px;
+      background: rgba(255, 250, 246, .96);
+      text-align: center;
+    }
+    .rotate-tip div {
+      width: min(360px, 100%);
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 860px) {
+      .competition-badge { top: 70px; }
+      .nav { padding: 10px 12px; }
+      .brand span { display: none; }
+      .nav-links {
+        width: auto;
+        max-width: calc(100vw - 24px);
+        gap: 2px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+      }
+      .nav-links a { padding: 8px; font-size: 12px; }
+      .section-head,
+      .stage-shell,
+      .notebook,
+      .wish-layout,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .insight-grid,
+      .media-grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+      .timeline::before { left: 36px; }
+      .moment,
+      .moment:nth-child(even) {
+        grid-template-columns: 72px 1fr;
+      }
+      .moment .year,
+      .moment:nth-child(even) .year {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .moment .moment-card,
+      .moment:nth-child(even) .moment-card {
+        grid-column: 2;
+      }
+      .stage-tabs {
+        position: static;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .tab {
+        min-height: 74px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .tab small { display: none; }
+      .mini-posters { grid-template-columns: 1fr; }
+      .ip-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .ip-card {
+        min-height: 120px;
+        padding: 8px;
+        font-size: 11px;
+      }
+      .float-tools { display: none; }
+      .float-tools #topBtn { display: none; }
+      .music-toggle {
+        right: 14px;
+        bottom: 72px;
+        min-width: 86px;
+        height: 46px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+      .hero { padding-left: 18px; padding-right: 18px; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) and (max-width: 920px) {
+      .rotate-tip { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div class="rotate-tip" aria-hidden="true">
+    <div>
+      <h2>竖屏体验更完整</h2>
+      <p class="lead">本作品为 1-C2 微信类移动终端 HTML5 设计制作，建议旋转回竖屏查看。</p>
+    </div>
+  </div>
+
+  <nav class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="返回首页">
+      <span class="brand-dot">20</span>
+      <span>同岁同行</span>
+    </a>
+    <div class="nav-links" aria-label="页面导航">
+      <a href="#insight" class="menu-item">洞察</a>
+      <a href="#stages" class="menu-item">三阶段</a>
+      <a href="#mistake" class="menu-item">错题本</a>
+      <a href="#wish" class="menu-item">心愿</a>
+    </div>
+  </nav>
+
+  <main class="app" id="top">
+    <section class="hero">
+      <div class="hero-media">
+        <img src="assets/hero-toy-campus.png" alt="原创潮玩角色站在校园晨光中的20周年主题视觉" fetchpriority="high" />
+      </div>
+      <img class="competition-badge" src="assets/ncda-logo.png" alt="未来设计师全国高校数字艺术设计大赛 logo" fetchpriority="high" />
+      <div class="hero-copy reveal visible">
+        <p class="eyebrow">2006 - 2026 POP MART 20周年校园共创</p>
+        <h1>同岁同行<br />一起长大</h1>
+        <p class="hero-sub">2006年，我们同时来到这个世界。2026年，20岁的泡泡玛特和20岁的你，一起把迷茫、热爱与勇气装进同一个成长盲盒。</p>
+        <div class="hero-actions">
+          <!-- 把<a>改成<button>，彻底解决跳转刷新问题 -->
+<button class="btn btn-primary" id="openBlindBoxBtn" type="button">开启成长盲盒</button>
+          <a class="btn btn-ghost" href="#wish">写给20岁的自己</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="insight">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">01 MARKET & BRAND INSIGHT</p>
+            <h2>潮玩不只是玩具，是和我们同龄的成长伙伴。</h2>
+          </div>
+          <p class="lead">作品的核心，旨在将泡泡玛特从“收藏级潮玩”转译为“同龄同行者”：同样憧憬、同样试错、同样在压力中守住热爱。</p>
+        </div>
+        <div class="insight-grid">
+          <article class="insight reveal">
+            <strong>同岁</strong>
+            <p>品牌创立于2006年，与当代20岁青年站在同一条成长时间线上，天然拥有“同龄人”叙事入口。</p>
+          </article>
+          <article class="insight reveal">
+            <strong>同长</strong>
+            <p>从潮流杂货铺到自有IP矩阵，品牌在试错中完成转型，呼应青年从校园到社会的自我迭代。</p>
+          </article>
+          <article class="insight reveal">
+            <strong>同行</strong>
+            <p>考研、求职、内卷、热爱，每个压力场景都可以被潮玩陪伴感重新点亮。</p>
+          </article>
+        </div>
+
+        <div class="timeline" aria-label="品牌和青年共同成长时间线">
+          <div class="moment reveal">
+            <div class="moment-card">
+              <h3>诞生启程</h3>
+              <p>泡泡玛特正式创立。那一年，许多参赛作品的目标受众也刚刚来到世界，带着同样亮晶晶的期待出发。</p>
+            </div>
+            <div class="year">2006</div>
+          </div>
+          <div class="moment reveal">
+            <div class="moment-card">
+              <h3>探索试错</h3>
+              <p>签约 Molly、推出盲盒，品牌从渠道商转向自有 IP 运营；青年也在校园、选择和兴趣里寻找自己的答案。</p>
+            </div>
+            <div class="year">2016</div>
+          </div>
+          <div class="moment reveal">
+            <div class="moment-card">
+              <h3>坚守热爱</h3>
+              <p>20岁的泡泡玛特与20岁的你一起面对未来：不回避压力，也不放弃喜欢。</p>
+            </div>
+            <div class="year">2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section story-stage" id="stages">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">02 CREATIVE STRATEGY</p>
+            <h2>共同见证彼此成长</h2>
+          </div>
+        </div>
+        <div class="stage-shell reveal">
+          <div class="stage-tabs" role="tablist" aria-label="传播阶段">
+            <button class="tab active" data-stage="first" type="button">初见 <small>见证彼此</small></button>
+            <button class="tab" data-stage="grow" type="button">成长 <small>不完美勇气</small></button>
+            <button class="tab" data-stage="with" type="button">同行 <small>向阳而生</small></button>
+          </div>
+          <div>
+            <article class="stage-panel active" id="first">
+              <span class="poster-label">第一阶段</span>
+              <h3>每一个开始，都值得被记住。</h3>
+              <p class="quote">“2006年，我们同时来到这个世界。”从第一份礼物、第一次相遇，到第一次走进校园，泡泡玛特成为青春里可被珍藏的伙伴。</p>
+              <div class="mini-posters">
+                <div class="mini-poster" style="--accent: var(--yellow)">
+                  <b>诞生</b>
+                  <span>同时出发，同样憧憬。把品牌起点和青年出生记忆绑定。</span>
+                </div>
+                <div class="mini-poster" style="--accent: var(--mint)">
+                  <b>第一份礼物</b>
+                  <span>人生的第一份惊喜，都值得珍藏。盲盒情绪被转译为成长惊喜。</span>
+                </div>
+              </div>
+            </article>
+            <article class="stage-panel" id="grow">
+              <span class="poster-label">第二阶段</span>
+              <h3>这题错了，但是方向对了。</h3>
+              <p class="quote">用“成长错题本”坦诚呈现品牌试错：门店亏损、代理依赖、品控反馈、热门款缺货。真诚不是弱点，而是让年轻人愿意共情的入口。</p>
+              <div class="mini-posters">
+                <div class="mini-poster" style="--accent: var(--pink)">
+                  <b>产品迭代</b>
+                  <span>从潮流杂货铺到自有IP公司，所有试错都是成长的勋章。</span>
+                </div>
+                <div class="mini-poster" style="--accent: var(--blue)">
+                  <b>用户反馈</b>
+                  <span>认真倾听每一个声音，持续优化品控、补货和售后体验。</span>
+                </div>
+              </div>
+            </article>
+            <article class="stage-panel" id="with">
+              <span class="poster-label">第三阶段</span>
+              <h3>别人卷速度，我们一起卷热爱。</h3>
+              <p class="quote">考研路上、求职路上、内卷时代、未来可期。把潮玩 IP 放到真实青年场景中，形成“陪伴我向阳而生”的情绪价值。</p>
+              <div class="mini-posters">
+                <div class="mini-poster" style="--accent: var(--violet)">
+                  <b>并肩作战</b>
+                  <span>你在为梦想熬夜，泡泡玛特陪你一起。</span>
+                </div>
+                <div class="mini-poster" style="--accent: var(--coral)">
+                  <b>未来可期</b>
+                  <span>20岁的泡泡玛特，20岁的你，我们一起奔赴未来。</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mistake">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">03 INTERACTION DESIGN</p>
+            <h2>成长错题本：把品牌真诚，变成用户的参与。</h2>
+          </div>
+          <p class="lead">用户可以写下自己的成长错题，页面会生成一张“已订正”的成长便签，用于截图分享或线下打卡墙延展。</p>
+        </div>
+        <div class="notebook">
+          <div class="wrong-book reveal">
+            <div class="mistake">
+              <h3>错题 01：盲目扩张，门店亏损</h3>
+              <p>2010-2015年，品牌以潮流零售起步，品类杂、利润薄，门店持续承压。</p>
+              <span class="correction">订正：2016年签约核心IP、推出盲盒，从渠道零售转向自有IP运营。</span>
+            </div>
+            <div class="mistake">
+              <h3>错题 02：依赖代理，被卡脖子</h3>
+              <p>曾依靠外部代理爆火，却因版权受限陷入危机。</p>
+              <span class="correction">订正：孵化 Molly、Dimoo、SKULLPANDA 等自主IP矩阵，建立长期资产。</span>
+            </div>
+            <div class="mistake">
+              <h3>错题 03：用户反馈，必须听见</h3>
+              <p>品控、售后、缺货和黄牛炒作，都是用户真实在意的问题。</p>
+              <span class="correction">订正：优化品控和售后，采用限购、实名、分阶段补货，保障普通用户体验。</span>
+            </div>
+          </div>
+          <aside class="interaction-card reveal">
+            <h3>写下你的成长错题</h3>
+            <p class="lead">不是每一次选择都能满分，但每一次尝试都有意义。</p>
+            <textarea class="field" id="mistakeInput" maxlength="90" placeholder="例如：我曾经害怕失败，所以错过了一次展示自己的机会。"></textarea>
+            <button class="btn btn-primary" id="fixMistake" type="button" style="width:100%; margin-top:12px;">生成订正便签</button>
+            <div class="user-note" id="userNote">你的订正会出现在这里。</div>
+          <div>
+    <h2 class="text-2xl font-bold mb-6 flex items-center">
+        <span class="mr-2">✨</span>
+        大家的成长错题
+        <span class="ml-2 text-sm text-gray-300 font-normal">(已有 12,847 人分享)</span>
+    </h2>
+    
+    <div id="user-mistakes-container" class="space-y-6">
+        <div id="visible-mistakes" class="space-y-6">
+            <!-- 默认显示的3条错题会通过JS动态生成 -->
+        </div>
+        
+        <div id="hidden-mistakes" class="space-y-6 hidden">
+            <!-- 隐藏的错题会通过JS动态生成 -->
+        </div>
+        
+        <button id="load-more-btn" class="w-full py-3 border border-pink-200 bg-pink-50 text-pink-600 rounded-xl font-medium hover:bg-pink-100 transition-colors">
+            加载更多
+        </button>
+    </div>
+</div>
+
+<style>
+    /* 原有页面样式补充 */
+    .notebook-line {
+        background-image: linear-gradient(#f8d7da 1px, transparent 1px);
+        background-size: 100% 2.5rem;
+        background-position: 0 1rem;
+    }
+    
+    .correction-tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-weight: 500;
+    }
+    
+    /* 用户错题卡片样式 */
+    .user-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .user-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 隐藏类 */
+    .hidden {
+        display: none !important;
+    }
+</style>
+
+<script>
+    // 生成柔和的用户名颜色（中等饱和度，中等亮度）
+    function generateUsernameColor() {
+        const hue = Math.floor(Math.random() * 360);
+        return `hsl(${hue}, 65%, 45%)`;
+    }
+    
+    // 生成柔和的订正背景色（低饱和度，高亮度）
+    function generateCorrectionBgColor() {
+        const hue = Math.floor(Math.random() * 360);
+        return `hsl(${hue}, 30%, 88%)`;
+    }
+    
+    // 生成柔和的订正文字颜色（与背景色同色系，深一些）
+    function generateCorrectionTextColor(hue) {
+        return `hsl(${hue}, 60%, 35%)`;
+    }
+    
+    // 示例用户错题数据（共15条，模拟最新内容）
+    const allUserMistakes = [
+        {
+            username: "泡泡玛特忠实粉丝",
+            mistake: "我曾经为了抽隐藏款花了很多钱，影响了正常生活。",
+            correction: "现在我学会了理性消费，只买自己真正喜欢的款式，享受过程而不是结果。",
+            time: "3分钟前",
+            likes: 328,
+            comments: 42
+        },
+        {
+            username: "Dimoo爱好者",
+            mistake: "我总是把自己的喜好强加给朋友，让他们也买盲盒。",
+            correction: "每个人都有自己的爱好，尊重别人的选择才是真正的朋友。",
+            time: "7分钟前",
+            likes: 256,
+            comments: 31
+        },
+        {
+            username: "潮玩收藏家",
+            mistake: "我曾经因为别人抽到了隐藏款而嫉妒不已。",
+            correction: "学会欣赏别人的好运，分享快乐会让快乐加倍。",
+            time: "12分钟前",
+            likes: 189,
+            comments: 24
+        },
+        {
+            username: "Molly小画家",
+            mistake: "我曾经因为工作太忙，忽略了自己的兴趣爱好。",
+            correction: "现在我每天都会抽出一点时间画画，生活变得更加充实有趣。",
+            time: "18分钟前",
+            likes: 175,
+            comments: 19
+        },
+        {
+            username: "SKULLPANDA迷",
+            mistake: "我总是追求完美，不允许自己犯任何错误。",
+            correction: "犯错是成长的一部分，接受不完美的自己才能走得更远。",
+            time: "25分钟前",
+            likes: 210,
+            comments: 28
+        },
+        {
+            username: "盲盒新手",
+            mistake: "我曾经因为第一次没抽到喜欢的款式就放弃了。",
+            correction: "坚持下去，你会发现每一个款式都有它独特的魅力。",
+            time: "32分钟前",
+            likes: 143,
+            comments: 17
+        },
+        {
+            username: "泡泡玛特员工",
+            mistake: "我曾经因为工作压力大而对顾客态度不好。",
+            correction: "现在我学会了调整自己的情绪，用微笑服务每一位顾客。",
+            time: "41分钟前",
+            likes: 198,
+            comments: 26
+        },
+        {
+            username: "设计师小王",
+            mistake: "我曾经抄袭过别人的设计作品。",
+            correction: "原创才是最有价值的，现在我坚持自己创作，虽然很难但很有成就感。",
+            time: "55分钟前",
+            likes: 167,
+            comments: 22
+        },
+        {
+            username: "大学生小李",
+            mistake: "我曾经因为沉迷游戏而荒废了学业。",
+            correction: "现在我合理安排时间，学习和娱乐两不误。",
+            time: "1小时前",
+            likes: 234,
+            comments: 35
+        },
+        {
+            username: "职场妈妈",
+            mistake: "我曾经因为工作太忙而错过了孩子的成长。",
+            correction: "现在我尽量平衡工作和家庭，珍惜和孩子在一起的每一刻。",
+            time: "1小时前",
+            likes: 289,
+            comments: 41
+        },
+        {
+            username: "潮玩设计师",
+            mistake: "我曾经为了迎合市场而放弃了自己的设计理念。",
+            correction: "现在我坚持做自己喜欢的设计，反而获得了更多人的认可。",
+            time: "2小时前",
+            likes: 156,
+            comments: 18
+        },
+        {
+            username: "泡泡玛特十年老粉",
+            mistake: "我曾经因为品牌涨价而生气，再也不买了。",
+            correction: "后来我理解了成本上涨的原因，现在依然支持泡泡玛特。",
+            time: "2小时前",
+            likes: 178,
+            comments: 23
+        },
+        {
+            username: "手办爱好者",
+            mistake: "我曾经把所有的零花钱都用来买手办。",
+            correction: "现在我学会了理财，每个月只花一部分钱在爱好上。",
+            time: "3小时前",
+            likes: 145,
+            comments: 16
+        },
+        {
+            username: "二次元少女",
+            mistake: "我曾经因为别人不理解我的爱好而和他们吵架。",
+            correction: "现在我学会了和不同爱好的人和平相处，求同存异。",
+            time: "3小时前",
+            likes: 192,
+            comments: 27
+        },
+        {
+            username: "创业者小张",
+            mistake: "我曾经因为一次创业失败就一蹶不振。",
+            correction: "失败是成功之母，现在我重新出发，更加谨慎和努力。",
+            time: "4小时前",
+            likes: 215,
+            comments: 30
+        }
+    ];
+    
+    // 创建单个用户错题卡片
+    function createUserCard(mistakeData) {
+        const usernameColor = generateUsernameColor();
+        const correctionHue = Math.floor(Math.random() * 360);
+        const correctionBgColor = `hsl(${correctionHue}, 30%, 88%)`;
+        const correctionTextColor = `hsl(${correctionHue}, 60%, 35%)`;
+        
+        const card = document.createElement('div');
+        card.className = 'user-card bg-white rounded-2xl shadow-md p-6 notebook-line';
+        card.innerHTML = `
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-400 to-purple-400 flex items-center justify-center text-white font-bold mr-3">
+                    ${mistakeData.username.charAt(0)}
+                </div>
+                <span class="font-bold" style="color: ${usernameColor}">${mistakeData.username}</span>
+                <span class="ml-auto text-gray-400 text-sm">${mistakeData.time}</span>
+            </div>
+            
+            <p class="text-gray-700 mb-4">${mistakeData.mistake}</p>
+            
+            <span class="correction-tag" style="background-color: ${correctionBgColor}; color: ${correctionTextColor}">
+                订正：${mistakeData.correction}
+            </span>
+            
+            <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between text-gray-400 text-sm">
+                <span>👍 ${mistakeData.likes}</span>
+                <span>💬 ${mistakeData.comments}</span>
+                <span>分享</span>
+            </div>
+        `;
+        
+        return card;
+    }
+    
+    // 初始化用户错题展示
+    function initUserMistakes() {
+        const visibleContainer = document.getElementById('visible-mistakes');
+        const hiddenContainer = document.getElementById('hidden-mistakes');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        
+        // 清空容器
+        visibleContainer.innerHTML = '';
+        hiddenContainer.innerHTML = '';
+        
+        // 默认显示前3条
+        for (let i = 0; i < 3; i++) {
+            const card = createUserCard(allUserMistakes[i]);
+            visibleContainer.appendChild(card);
+        }
+        
+        // 剩下的12条隐藏
+        for (let i = 3; i < allUserMistakes.length; i++) {
+            const card = createUserCard(allUserMistakes[i]);
+            hiddenContainer.appendChild(card);
+        }
+        
+        // 加载更多按钮点击事件
+        loadMoreBtn.addEventListener('click', function() {
+            if (hiddenContainer.classList.contains('hidden')) {
+                // 显示隐藏内容
+                hiddenContainer.classList.remove('hidden');
+                loadMoreBtn.textContent = '收起';
+            } else {
+                // 隐藏内容
+                hiddenContainer.classList.add('hidden');
+                loadMoreBtn.textContent = '加载更多';
+                // 滚动到顶部
+                document.getElementById('user-mistakes-container').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+    
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', initUserMistakes);
+</script>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="media">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">04 MEDIA & CAMPUS PLAN</p>
+            <h2>三周传播，线上话题和校园打卡闭环。</h2>
+          </div>
+        </div>
+        <div class="media-grid">
+          <article class="media-card reveal" style="--accent: var(--pink)">
+            <div>
+              <div class="week">W1</div>
+              <h3>预热期</h3>
+              <p>发布第一阶段海报，发起 #我的20岁成长对比照#，沉淀初始UGC。</p>
+            </div>
+            <div class="channels"><span class="chip">小红书</span><span class="chip">抖音</span><span class="chip">微博超话</span></div>
+          </article>
+          <article class="media-card reveal" style="--accent: var(--violet)">
+            <div>
+              <div class="week">W2</div>
+              <h3>爆发期</h3>
+              <p>开展“成长错题本”征集，邀请校园KOC和情感/知识类KOL深度解读。</p>
+            </div>
+            <div class="channels"><span class="chip">KOC</span><span class="chip">KOL</span><span class="chip">话题挑战</span></div>
+          </article>
+          <article class="media-card reveal" style="--accent: var(--mint)">
+            <div>
+              <div class="week">W3</div>
+              <h3>延续期</h3>
+              <p>落地校园海报展、打卡墙、心愿盲盒体验站，再将线下内容二次传播。</p>
+            </div>
+            <div class="channels"><span class="chip">校园社群</span><span class="chip">表白墙</span><span class="chip">线下展</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wish-zone" id="wish">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">05 WISH BLIND BOX</p>
+            <h2>给20岁的自己，封存一枚未来盲盒。</h2>
+          </div>
+        </div>
+        <div class="wish-layout">
+          <div class="blind-box reveal">
+            <div class="box-visual" aria-hidden="true">
+              <div class="box-face">20<br />WISH<small>OPEN IN FUTURE</small></div>
+            </div>
+            <p class="quote" style="color: rgba(255,255,255,.78);">“2006年我____，2026年我____。”把这句话补完整，你就拥有了一枚属于自己的同岁同行心愿盲盒。</p>
+          </div>
+          <form class="wish-form reveal" id="wishForm">
+            <label for="name">你的名字</label>
+            <input id="name" maxlength="16" placeholder="输入昵称" required />
+            <label for="wishText">写给20岁的自己</label>
+            <textarea id="wishText" maxlength="120" placeholder="我想对未来的自己说..." required></textarea>
+            <label>选择陪你同行的IP</label>
+            <div class="ip-options">
+              <label>
+                <input type="radio" name="ip" value="Molly" checked />
+                <span class="ip-card">
+                  <img src="assets/ip-molly.png" alt="Molly 同行IP形象" loading="lazy" decoding="async" />
+                  <span>Molly</span>
+                </span>
+              </label>
+              <label>
+                <input type="radio" name="ip" value="Dimoo" />
+                <span class="ip-card">
+                  <img src="assets/ip-dimoo.png" alt="Dimoo 同行IP形象" loading="lazy" decoding="async" />
+                  <span>Dimoo</span>
+                </span>
+              </label>
+              <label>
+                <input type="radio" name="ip" value="SKULLPANDA" />
+                <span class="ip-card">
+                  <img src="assets/ip-skullpanda.png" alt="SKULLPANDA 同行IP形象" loading="lazy" decoding="async" />
+                  <span>SKULLPANDA</span>
+                </span>
+              </label>
+            </div>
+            <button class="btn btn-primary" type="submit" style="width:100%; margin-top:18px;">封存心愿</button>
+            <div class="wish-result" id="wishResult"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <p><b>作品名称：</b>同岁同行，一起长大 - 泡泡玛特20周年HTML5互动作品</p>
+        <p><b>参赛类别：</b>未来设计师全国高校数字艺术设计大赛 1-C2 微信类移动终端 / HTML5设计制作作品</p>
+        <p><b>参赛日期：</b>2026年6月3日</p>
+      </div>
+      <img class="footer-logo" src="assets/ncda-logo-white.png" alt="未来设计师全国高校数字艺术设计大赛白色 logo" />
+    </div>
+  </footer>
+
+  <audio id="bgMusic" data-src="assets/bgm-peiwozhangda_min.mp3" preload="none" loop playsinline webkit-playsinline></audio>
+
+  <button class="music-toggle music-active" id="musicBtn" type="button" aria-label="暂停背景音乐" title="暂停背景音乐">音乐开</button>
+
+  <div class="float-tools" aria-label="快捷操作">
+    <button class="tool-btn" id="topBtn" type="button" aria-label="返回顶部">↑</button>
+  </div>
+
+  <script>
+    const nav = document.getElementById("nav");
+    const topBtn = document.getElementById("topBtn");
+    const musicBtn = document.getElementById("musicBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    const revealItems = document.querySelectorAll(".reveal");
+    const tabs = document.querySelectorAll(".tab");
+    const panels = document.querySelectorAll(".stage-panel");
+    const mistakeInput = document.getElementById("mistakeInput");
+    const userNote = document.getElementById("userNote");
+    const wishForm = document.getElementById("wishForm");
+    const wishResult = document.getElementById("wishResult");
+    let audioContext;
+    let soundOn = true;
+    let musicWanted = true;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.16 });
+    revealItems.forEach((item) => observer.observe(item));
+
+    bgMusic.volume = 0.46;
+    if (document.readyState === "complete") {
+      scheduleMusicStart();
+    } else {
+      window.addEventListener("load", scheduleMusicStart, { once: true });
+    }
+    document.addEventListener("WeixinJSBridgeReady", startMusic, false);
+    window.addEventListener("pointerdown", () => {
+      if (musicWanted && bgMusic.paused) startMusic();
+    }, { once: true });
+
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("show", window.scrollY > 80);
+    }, { passive: true });
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const id = tab.dataset.stage;
+        tabs.forEach((item) => item.classList.toggle("active", item === tab));
+        panels.forEach((panel) => panel.classList.toggle("active", panel.id === id));
+        playTone(420, 0.04);
+      });
+    });
+
+    document.getElementById("fixMistake").addEventListener("click", () => {
+      const text = mistakeInput.value.trim();
+      if (!text) {
+        userNote.textContent = "先写下一道真实的成长错题，再把它订正成勇气。";
+        return;
+      }
+      userNote.innerHTML = `<strong>我的成长错题：</strong>${escapeHtml(text)}<br><strong>订正：</strong>这一次不算失败，它只是告诉我，下一步要更勇敢一点。`;
+      playTone(640, 0.08);
+    });
+
+    wishForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const text = document.getElementById("wishText").value.trim();
+      const ip = new FormData(wishForm).get("ip");
+      const code = `PM20-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+      wishResult.classList.add("show");
+      wishResult.innerHTML = `<strong>${escapeHtml(name)} 的心愿盲盒已封存</strong><br>同行IP：${ip}<br>心愿编号：${code}<br>“${escapeHtml(text)}”<br><small>截图分享，参与 #我的20岁成长对比照# 与校园打卡墙活动。</small>`;
+      playTone(760, 0.1);
+    });
+
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      playTone(520, 0.05);
+    });
+
+    musicBtn.addEventListener("click", () => {
+      if (bgMusic.paused) {
+        musicWanted = true;
+        soundOn = true;
+        startMusic();
+      } else {
+        musicWanted = false;
+        soundOn = false;
+        bgMusic.pause();
+        updateMusicButton(false, false);
+      }
+    });
+
+    function startMusic() {
+      musicWanted = true;
+      ensureMusicSource();
+      const playPromise = bgMusic.play();
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise
+          .then(() => updateMusicButton(true, false))
+          .catch(() => updateMusicButton(false, true));
+      } else {
+        updateMusicButton(!bgMusic.paused, false);
+      }
+    }
+
+    function ensureMusicSource() {
+      if (!bgMusic.getAttribute("src")) {
+        bgMusic.src = bgMusic.dataset.src;
+        bgMusic.load();
+      }
+    }
+
+    function scheduleMusicStart() {
+      const run = () => {
+        if (musicWanted) startMusic();
+      };
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(run, { timeout: 3200 });
+      } else {
+        setTimeout(run, 2600);
+      }
+    }
+
+    function updateMusicButton(isPlaying, isWaiting) {
+      musicBtn.classList.toggle("music-active", isPlaying);
+      musicBtn.classList.toggle("music-waiting", isWaiting);
+      musicBtn.textContent = isPlaying ? "音乐开" : "音乐关";
+      musicBtn.setAttribute("aria-label", isPlaying ? "暂停背景音乐" : "播放背景音乐");
+      musicBtn.title = isPlaying ? "暂停背景音乐" : "播放背景音乐";
+    }
+
+    function playTone(frequency, duration) {
+      if (!soundOn && duration !== 0.12) return;
+      audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.05, audioContext.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration + 0.02);
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+   // 等待页面所有元素加载完成后再绑定事件
+document.addEventListener('DOMContentLoaded', function() {
+  const openBlindBoxBtn = document.getElementById('openBlindBoxBtn');
+  let isConfettiPlaying = false;
+
+  if (openBlindBoxBtn) { // 加个判断，防止元素不存在报错
+    openBlindBoxBtn.addEventListener('click', function() {
+      if (isConfettiPlaying) return;
+      isConfettiPlaying = true;
+
+      // 第一层：中心大爆炸
+      confetti({
+        particleCount: 250,
+        spread: 130,
+        origin: { y: 0.5 },
+        colors: ['#ff5f88', '#ff8a68', '#ffd95a', '#57c7b6', '#6b9cff', '#ffffff'],
+        scalar: 1.2,
+        gravity: 0.75
+      });
+
+      // 第二层：左右两侧爆炸
+      setTimeout(() => {
+        confetti({ particleCount: 120, angle: 55, spread: 75, origin: { x: 0 }, colors: ['#ff5f88', '#ff8a68', '#ffd95a'] });
+        confetti({ particleCount: 120, angle: 125, spread: 75, origin: { x: 1 }, colors: ['#57c7b6', '#6b9cff', '#ffffff'] });
+      }, 180);
+
+      // 第三层：顶部飘落
+      setTimeout(() => {
+        confetti({ particleCount: 150, spread: 180, origin: { y: 0 }, gravity: 0.45, scalar: 0.9, colors: ['#ff5f88', '#ffd95a', '#57c7b6'] });
+      }, 350);
+
+      // 礼花播放800ms后再跳转到洞察页面
+      setTimeout(() => {
+        window.location.href = '#insight';
+        isConfettiPlaying = false;
+      }, 800);
+    });
+  }
+});
+  </script>
+  <section class="section rocket-box-area" style="background:#171418;padding:80px 20px;overflow:hidden;">
+  <div class="section-inner" style="text-align:center;">
+    <h2 style="color:#fff;margin-bottom:50px;font-size:26px;">心愿火箭 · 寄语升空</h2>
+    <!-- 火箭盲盒容器 -->
+    <div id="rocketWrap" style="position:relative;height:320px;display:flex;align-items:center;justify-content:center;">
+      <div id="rocketBox" style="width:90px;height:110px;cursor:pointer;position:relative;transition:all 0.3s;">
+        <!-- 火箭本体 -->
+        <div style="width:100%;height:82%;background:linear-gradient(135deg,#ff7856,#ffbc34);border-radius:45px 45px 12px 12px;position:relative;">
+          <div style="width:32px;height:32px;background:#fff;border-radius:50%;position:absolute;top:18px;left:calc(50% - 16px);"></div>
+        </div>
+        <!-- 喷射口 -->
+        <div id="fireBase" style="width:36px;height:22px;background:linear-gradient(#ff2c2c,#ffdd00);border-radius:0 0 18px 18px;margin:0 auto;opacity:0;"></div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* 飘出彩色鸡汤文字 */
+    .soup-item{
+      position:absolute;
+      font-size:15px;
+      font-weight:500;
+      white-space:nowrap;
+      animation:textFloat 4.2s ease-out forwards;
+    }
+    @keyframes textFloat{
+      0%{opacity:1;transform:translateY(0) rotate(0deg);}
+      100%{opacity:0;transform:translateY(-320px) rotate(18deg);}
+    }
+    /* 火箭升空动画 */
+    @keyframes flyRocket{
+      0%{transform:translateY(0);}
+      100%{transform:translateY(-420px);opacity:0;}
+    }
+    .rocket-fly{
+      animation:flyRocket 3.2s ease-out forwards;
+    }
+    /* 喷火闪烁 */
+    @keyframes fireBlink{
+      0%,100%{opacity:0.8;height:22px;}
+      50%{opacity:1;height:30px;}
+    }
+    .fire-active{
+      animation:fireBlink 0.18s infinite;
+    }
+  </style>
+
+  <script>
+    // 多色数组
+    const colorArr = ['#ff5964','#ffd233','#39e2ff','#8cff80','#d98cff','#ffaa77','#ffffff'];
+    // 鸡汤文案库
+    const soupList = [
+      "万事顺意，前路坦荡",
+      "所有努力终有回响",
+      "慢慢变好，自在从容",
+      "岁岁无忧，平安喜乐",
+      "奔赴热爱，永不彷徨",
+      "生活明朗，万物可爱",
+      "保持初心，静待花开",
+      "风雨过后皆是晴空",
+      "未来闪闪发光",
+      "不慌不忙，来日方长",
+      "心之所向，素履以往",
+      "好运正在奔赴你",
+      "不负时光不负己",
+      "平凡日子也有星光",
+      "所求皆如愿所行化坦途"
+    ];
+    const rocketBox = document.getElementById('rocketBox');
+    const fireBase = document.getElementById('fireBase');
+    const wrapDom = document.getElementById('rocketWrap');
+    let isLaunch = false;
+
+    rocketBox.onclick = function(){
+      if(isLaunch) return;
+      isLaunch = true;
+      // 开启火焰
+      fireBase.classList.add('fire-active');
+      // 批量生成彩色文字
+      for(let i=0;i<32;i++){
+        setTimeout(()=>{
+          const span = document.createElement('span');
+          span.className = 'soup-item';
+          let ranText = soupList[Math.floor(Math.random()*soupList.length)];
+          let ranColor = colorArr[Math.floor(Math.random()*colorArr.length)];
+          span.style.color = ranColor;
+          // 横向随机偏移
+          let leftRan = -70 + Math.random()*140;
+          span.style.left = `calc(50% + ${leftRan}px)`;
+          span.style.bottom = '20px';
+          span.innerText = ranText;
+          wrapDom.appendChild(span);
+          // 文字自动销毁
+          setTimeout(()=>span.remove(),4200);
+        },i*45)
+      }
+      // 延迟火箭起飞
+      setTimeout(()=>{
+        rocketBox.classList.add('rocket-fly');
+      },700)
+      // 全部结束重置
+      setTimeout(()=>{
+        fireBase.classList.remove('fire-active');
+        rocketBox.classList.remove('rocket-fly');
+        isLaunch = false;
+      },3800)
+    }
+  </script>
+</section>
+</body>
+</html>
